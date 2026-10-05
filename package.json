@@ -1,0 +1,23 @@
+{
+  "name": "naturexpress-tata-dealership-os",
+  "version": "1.0.0",
+  "description": "NatureXpress Enterprise Dealership OS - Connected Workshop & Revenue Multiplier for Tata Motors Authorized Dealerships",
+  "scripts": {
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "server": "cd server && node index.js",
+    "client": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "start": "node server/index.js"
+  },
+  "keywords": [
+    "tata-motors",
+    "dealership-os",
+    "workshop-automation",
+    "whatsapp-cloud-api",
+    "automotive-crm",
+    "obd2-diagnostics",
+    "extended-warranty"
+  ],
+  "author": "Chetan (Founder, NatureXpress Technologies)",
+  "license": "UNLICENSED"
+}
