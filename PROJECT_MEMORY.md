@@ -2,43 +2,51 @@
 
 > **Project Identity:** High-Ticket B2B SaaS Dealership Operating System (₹10–25 Lakhs / yr subscription).  
 > **Positioning:** NatureXpress DealerOS — The Revenue & Operations Intelligence Layer for High-Volume Dealerships.  
-> **Target Customer:** Tata Motors Authorized Dealership Owners / Dealer Principals (Pilot: Sanghi Brothers Indore Cluster, Shyam Automotive, Jagdish Motors).  
+> **Target Customer:** Tata Motors Authorized Dealership Owners / Dealer Principals.  
+> **Primary Flagship Deployment:** Shyam Automotive Tata Motors (Scheme 140 Main Rd, Infront of Agarwal Public School, Indore — 4.9★, 1,237 Google Reviews).  
+> **Official Connected Production Domain:** https://automotive.naturexpress.in (Vercel Production)  
+> **Google OAuth 2.0 Client ID:** `935687850459-jemqlrld2l8vskitshkb9t1r3n2s6ed2.apps.googleusercontent.com`  
 > **Founder:** Chetan, NatureXpress Technologies.
 
 ---
 
 ## 1. Executive Summary & Value Proposition
-NatureXpress is a specialized vertical SaaS operating system for high-volume Tata Motors passenger vehicle (PV & EV) dealerships. Rather than replacing legacy DMS, DealerOS acts as the revenue and operational intelligence layer organized into **4 Core Pillars**:
+NatureXpress is a specialized vertical SaaS operating system for high-volume Tata Motors passenger vehicle (PV & EV) dealerships. Rather than replacing legacy DMS or functioning as a toy fintech middleware, DealerOS delivers **pure operational and financial control with ZERO payment gateway interception and ZERO Meta Cloud API lock-in**:
 
-1. **Pillar 1: Command & Intelligence:**
-   - **Dealer Command Center & Revenue Leakage Radar:** Identifies ₹4.72 Lakhs in daily uncaptured margin (Insurance, Accessories, Overdue Service, EW, Unapproved estimates).
-   - **8:00 AM MD WhatsApp Digest:** Daily executive briefing sent directly to Dealer Principal & GM WhatsApp.
-   - **P&L & Bay Yield Analytics:** ₹/Bay/Hour margin math and interactive ROI profit simulator.
-
-2. **Pillar 2: Revenue Recovery Engine:**
-   - **Live Opportunity Action Center:** 1-tap WhatsApp quotes and digital authorizations attributing margin to the dealer's daily ledger.
-   - **Tata Care+ Motor Insurance Renewal:** ₹3,200/car margin recovery with 50% NCB transfer.
-   - **Personalized OEM Accessory Bundler:** Model-specific combos (4K Dashcam, 7D Mats).
-   - **Extended Warranty & No-Cost EMI:** 1-tap financing gateway via Razorpay & Pine Labs.
-   - **6-Step WhatsApp Drip Sequences & Indore Value Club:** Post-service retention for Year 4+ vehicles.
-
-3. **Pillar 3: Workshop Flow & Throughput:**
-   - **18-Bay CSP Load-Balancer:** Constraint Satisfaction algorithm guaranteeing on-time 5:30 PM delivery.
-   - **15-Second Video Approval Engine:** Transparent video proof sent via WhatsApp for additional repairs with 1-tap digital authorization.
-   - **Aarohan Vernacular Diagnostic Suite:** Hindi step-by-step diagnostic workflows + real-time Web Audio FFT acoustic noise classification.
-   - **Pre-Delivery 5km Road Test Gate:** Mandatory QC sign-off.
-
-4. **Pillar 4: Risk & Integrity Fortress:**
-   - **AI Zero-Rejection Warranty Fortress:** Locks ECU DTC freeze-frame telemetry before codes are cleared and validates 4 mandatory photo angles.
-   - **CCM Real-Time Sentiment Radar & Legal Defense:** Ingests customer WhatsApp messages, detects escalation keywords (e.g. "Consumer Court"), and alerts management.
-   - **Direct CSI Integrity Anti-Tamper Shield:** Bypasses internal survey manipulation.
-   - **Inter-Dealer 45-Min Parts Pool Swarm & Dead-Stock Liquidator:** Connects inventory across Indore cluster dealers.
+1. **Enterprise Ground Truth:**
+   - **No Payment Interception:** The dealer keeps 100% control of cash/card EDC/RTGS collections; software audits, reconciles, and generates Gate Passes.
+   - **No Paid Meta WhatsApp Lock-in:** Customer estimate approvals and job card notifications run via lightweight mobile web links and native browser `wa.me` intent links.
+   - **ACID Database Foundation:** Built on embedded SQLite in WAL mode (`server/data/naturexpress.db`) for basement workshop resilience.
+   - **Strict Role-Based Access Control:** Dedicated 4-digit PIN access for SA (`1111`), Tech (`2222`), Store (`3333`), Cashier (`4444`), Guard (`5555`), and DP (`9999`).
+   - **90-Second SA Intake Desk:** 360° vehicle scratch/dent mapper with camera photo evidence, Parivahan lookup, fuel/odometer telemetry, and customer stylus signature.
+   - **Zero-Install Customer Approval Hub (`/#/view/estimate/:token`):** Standalone customer web view with official dealership letterhead, 15-second video inspection player, and interactive 1-tap Approve/Decline toggles.
+   - **Phase 2 Valet Identity Verification (`/#/pickup/:token`):** Official digital badge & mission code for valets picking up cars at customer homes, removing scam anxiety without messy WhatsApp groups.
+   - **Phase 2 Live Customer Service Tracker (`/#/track/:token`):** 8-stage interactive visual timeline showing live vehicle stages (Intake, Inspection, Estimate, Bay Work, Washing, Road Test, Billing, Gate Passed), intake scratch evidence, and 30s auto-refresh polling.
+   - **Phase 2 Valet Pickup Scheduler Desk:** Service Advisor dispatch terminal to assign valets, record pickup details, trigger native wa.me intent messages, and manage pickup queues.
+   - **Phase 3 Mobile-First PWA App & Showroom Portal (`ShyamAutomotivePortal.jsx`):** Engineered as a native PWA/Mobile App named **Shyam Automotive** with responsive parity from `shyamautomotive.com`. Features: Persistent bottom navigation bar (Home, Showroom, Service, Status Radar, Menu), dynamic branch location selector (`📍 Scheme 140, Indore ▾`), 24x7 SOS emergency chip (`1800 209 7979`), horizontal story/quick-action chips, bottom-sheet sliding drawers for mobile modals with touch drag handles, 1-tap PWA install prompt, full 15-vehicle Tata lineup, real-time RTO & Accidental status boards, Valet Pickup with TrustPass, Tata Care Insurance, Value Care AMC, TMA Exchange appraisal, and seamless desktop scaling.
+   - **Phase 4 Lakhs-Worth Enterprise Landing Page Suite (`client/src/components/landing/*`):** Engineered with 20+ years enterprise developer, marketing CRO, and consumer psychology expertise:
+     1. `LiveTelemetryRadar.jsx`: Real-time Scheme 140 18-bay CSP load balancer, live turnover metrics, 72-min turnaround time, and 99.2% CSI.
+     2. `ServiceCostEstimator.jsx`: Interactive Tata periodic maintenance price engine with itemized OEM parts/fluids/labor, 18% GST calculation, and the Shyam Automotive Price Lock Promise.
+     3. `VehicleComparator.jsx`: Interactive side-by-side spec comparison table for all 15 models (Curvv, Nexon, Harrier, Safari, etc.) with BNCAP scores, boot space, ADAS, and dual test drive triggers.
+     4. `ValetTrustPassDeepDive.jsx`: 4-pillar anti-scam security blueprint (Verified Driver Photo ID, Secret 4-Digit Handover OTP, 360° Scratch & Fuel digital receipt, live GPS transit) with interactive live badge simulation.
+     5. `EvSavingsCalculator.jsx`: Tata.ev clean energy ROI calculator with daily commute slider, annual fuel savings (₹86,000+), 5-year savings (₹4.3L), and Scheme 140 60kW DC Fast Charger showcase.
+     6. `TradeInValuationWizard.jsx`: Tata Motors Assured (TMA) 15-minute scientific valuation tool with immediate Form 29/30 RTO indemnity and ₹35,000 Shyam Automotive Exchange Bonus Voucher.
+     7. `DealershipHeritageCharter.jsx`: Founder letter and personal commitment from Dealer Principal Shyam Singhal, plus the 5-Point Customer Bill of Rights.
+     8. `CustomerReviewsWall.jsx`: Filterable social proof wall with verified Indore reviews (New delivery, 90-min service, valet, bodyshop) and Google 4.9★ link.
+     9. `ComprehensiveFaq.jsx`: 8-point interactive accordion addressing all pricing, delivery, valet safety, warranty, and EV battery objections.
+     10. `EnterpriseMegaFooter.jsx`: Multi-column enterprise footer with complete legal compliance, RTO utilities, branch directories, emergency RSA hotline, and DealerOS Staff PIN bridge.
+   - **Phase 5 Enterprise Vehicle Variant Decision Suite & AI Model Chooser (`client/src/data/tataVehicleVariants.js` & `client/src/components/landing/VehicleDetailVariantModal.jsx`):** Directly resolves the Indian car buyer's "Variant Paralysis" (e.g. over 60+ variant combinations of Smart, Pure, Creative, Fearless, +, S, DCA, iCNG):
+     1. **Tab 1: 🧠 "Which Should I Buy?" (AI Recommender & Persona Matcher):** Interactive filters for budget, transmission (Manual vs DCA/AMT/E-Drive), and must-haves (Sunroof, 360° Camera, Ventilated Seats, ADAS), matching buyers with the exact optimum variant (e.g. Creative+ S) while explaining *why* it's their ideal match.
+     2. **Tab 2: 📋 "All Variants & Differences Matrix":** Full vertical ladder with clear badges ("★ Best VFM", "Budget Accessible", "Flagship Tech"), upgrade summaries over lower trims, and the Tata nomenclature decoder (`+`, `S`, `DCA`, `Dark`).
+     3. **Tab 3: 💰 "Indore MP09 On-Road Price Calculator":** Real-time transparent pro-forma invoice breakdown with Ex-Showroom, MP09 RTO tax slabs, Tata Care 1+3 Zero-Dep Insurance, FASTag/HSRP, TCS, optional Extended Warranty & Accessories toggles, plus 5-year monthly EMI estimation and 1-tap WhatsApp invoice dispatch.
+     4. **Tab 4: ⚙️ "Full Technical Specifications":** Powertrain outputs (PS/Nm), ARAI mileage/range, dimensions, class-leading ground clearance, boot capacity, fuel tank/battery kWh, and BNCAP crash scores.
+     5. **Tab 5: 🎨 "Official Colors & Stock Availability":** Visual OEM paint swatches with real-time stock allocation status at Scheme 140 hub (3-5 days delivery for fast-movers).
 
 ---
 
 ## 2. Technical Stack & Architecture
 - **Frontend:** React 19 + Vite 6 + Tailwind CSS v4 + Lucide Icons + Canvas Confetti.
-  - **Theme:** Clean Slate & Deep Navy executive theme (`#0f172a`, `#1e293b`, `#f8fafc`).
+  - **Theme (CRITICAL PERMANENT MANDATE):** STRICT CLEAN LIGHT THEME ONLY (`#ffffff`, `#f8fafc`, `#f1f5f9`). ABSOLUTELY ZERO dark blue, navy, or black background sections anywhere in the entire system. All backgrounds must be crisp white, soft light slate, or airy modern gradients. High-contrast dark typography (`#0f172a`, `#1e293b`). Vibrant brand accents for interactive elements (Tata Blue `#2563eb`, Emerald `#059669`). The user explicitly hates dark blue/black backgrounds in any section.
   - **Port:** `http://localhost:3000` (Dev Server with Live Hot-Reload).
 - **Backend:** Node.js Express + WebSocket Server (`ws`) + Local Atomic JSON File Database (`server/data/store.js`).
   - **Port:** `http://localhost:5000` (API Server, WebSockets & SPA Static Host).

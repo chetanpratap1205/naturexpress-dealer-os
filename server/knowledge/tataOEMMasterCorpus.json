@@ -1,0 +1,194 @@
+{
+  "oem": "Tata Motors Passenger Vehicles (TMPV) & Tata Passenger Electric Mobility (TPEM)",
+  "framework": "Tata Motors Aarohan Service Excellence & 7-Step Lifecycle",
+  "version": "2026.3.0-Production-Enterprise",
+  "territory": "Madhya Pradesh - Indore Metropolitan Cluster (Sanghi Brothers, Shyam Automotive, Jagdish Motors)",
+  "regulatoryCompliance": [
+    "AIS-038 Rev 2 / UN ECE R100 (EV High-Voltage Safety)",
+    "IS 15652 / IEC 61111 Class 2 (33kV Electrical Matting)",
+    "IEC 60900 / DIN EN 60900 (1000V VDE Insulated Tooling)",
+    "GST Act Section 31 (SAC 998714 Labor @ 18%, HSN 8708 Spares @ 28%)",
+    "Oracle Siebel CRM-DMS 2.0 / SAP NetWeaver SOAP Protocol"
+  ],
+  "agentDomainKnowledge": {
+    "dealerPrincipal": {
+      "role": "Macro Command Center & Financial Profitability Boss",
+      "pnlBenchmarks": {
+        "serviceAbsorptionTarget": ">= 100% (Top Quartile: 115%+)",
+        "serviceAbsorptionFormula": "(Total After-Sales Gross Profit [Labor + Spares + Body Shop] / Total Dealership Fixed Expenses) * 100",
+        "currentTier2AverageAbsorption": "62% – 72%",
+        "laborGrossMargin": "85% – 92%",
+        "sparePartsGrossMargin": "18% – 24%",
+        "partsToLaborRevenueRatio": "1.6:1 to 2.2:1",
+        "bayProductivityTarget": "4.5 to 5.5 cars / bay / day (Industry avg: 2.8)",
+        "laborYieldPerBayHourTiers": {
+          "underperforming": "₹350 – ₹450 / hr",
+          "healthyBenchmark": "₹650 – ₹850 / hr",
+          "highYieldOptimized": "₹950 – ₹1,450+ / hr"
+        }
+      },
+      "indoreClusterArchitecture": [
+        { "code": "SNG-IND-01", "name": "Sanghi Brothers (Indore Central Bypass Flagship)", "bays": 18, "role": "Central Cleanroom & High-Voltage EV Hub", "dailyThroughput": 42 },
+        { "code": "SNG-IND-02", "name": "Sanghi Brothers (Manorama Ganj)", "bays": 12, "role": "Express Quick-Lube Satellite", "dailyThroughput": 28 },
+        { "code": "SHY-IND-01", "name": "Shyam Automotive (Dewas Road Industrial Area)", "bays": 14, "role": "Inter-Dealer Swarm Node", "dailyThroughput": 32 },
+        { "code": "JAG-IND-01", "name": "Jagdish Motors (Pithampur Industrial Hub)", "bays": 16, "role": "Fleet & Heavy Commercial/Passenger Node", "dailyThroughput": 36 }
+      ],
+      "revenueLeakageRadarMap": {
+        "unapprovedVideoEstimates": "₹1,42,000 / day across cluster",
+        "expiredInsuranceDropoffs": "₹1,84,000 / day (NCB 50% Upsell Gap)",
+        "fngYear4Attrition": "₹98,500 / day (Post-warranty churn to Dewas Naka / Pologround)",
+        "plantBackorderIdleBays": "₹47,500 / day (Avoidable with 45-Min Cluster Swarm)"
+      }
+    },
+    "serviceAdvisor": {
+      "role": "Rapid Intake & Transparent Digital Upsell Desk",
+      "sopGuidelines": {
+        "maxIntakeTimeSeconds": 30,
+        "greetingTimeLimitSeconds": 120,
+        "maxDailyLoadPerSA": "7 to 9 vehicles/day (prevents rush errors)",
+        "costDeviationThreshold": "> 10% requires explicit customer re-authorization"
+      },
+      "rapidIntakeChecklist": [
+        "1. Cluster & Electrical: Odometer (km), Fuel / SoC %, 12V Battery terminal voltage (>= 12.4V), MIL/ABS/Airbag indicators",
+        "2. 360° Exterior Body: 16-facet 2D digital scratch/dent marking, windshield chips, wiper blades, tyre tread depth",
+        "3. Boot & Tool Audit: Spare wheel (stepney) pressure, hydraulic jack, triangle, towing eye bolt, parcel tray",
+        "4. Valuables & Fastag: Fastag balance check, dashcam SD card, loose cash prompt & digital customer countersign"
+      ],
+      "flatRateTimesCatalogue": {
+        "LON-PMS-MIN": { "frt": 1.0, "description": "Minor Periodic Maintenance (10k interim checkup)", "laborCostINR": 1250 },
+        "LON-PMS-MAJ": { "frt": 2.5, "description": "Major Periodic Maintenance (15k/30k/45k)", "laborCostINR": 2850 },
+        "LON-PMS-OVH": { "frt": 5.5, "description": "60,000 km Major Overhaul (Timing belt/DCA/Coolant)", "laborCostINR": 6800 },
+        "LON-BRK-FRT": { "frt": 0.7, "description": "Front Ceramic Brake Pad Set Replacement", "laborCostINR": 850 },
+        "LON-BRK-DSC": { "frt": 1.2, "description": "Front Brake Disc Skimming / Rotor Replacement", "laborCostINR": 1450 },
+        "LON-CLT-REP": { "frt": 3.8, "description": "Clutch Disc, Pressure Plate & Release Bearing Overhaul", "laborCostINR": 4200 },
+        "LON-TIM-KRY": { "frt": 4.8, "description": "Timing Belt & Tensioner Kit (2.0L Kryotec Diesel)", "laborCostINR": 5800 },
+        "LON-EV-ISO": { "frt": 1.0, "description": "EV High Voltage Safe De-energization & Megger Test", "laborCostINR": 1450 }
+      }
+    },
+    "floorTechnician": {
+      "role": "Diagnostic Master & Vernacular Hindi Technical Coach",
+      "dtcTroubleTrees": {
+        "P0AC0": {
+          "code": "P0AC0",
+          "title": "Hybrid/EV Battery Current Sensor Circuit Range/Performance",
+          "model": "Tata Nexon EV Empowered / Punch EV / Curvv EV",
+          "severity": "HIGH (Turtle / Limp-Home Mode Triggered)",
+          "system": "High Voltage Battery Junction Box (BJB) Shunt Sensor",
+          "hindiGuide": [
+            "चरण 1 (12V पावर टेस्ट): सेंसर कनेक्टर के पिन 1 और पिन 3 पर 12.0V – 12.8V वोल्टेज चेक करें।",
+            "चरण 2 (CAN बस ऑसिलोस्कोप): CAN-H और CAN-L पर 60-Ohm टर्मिनेशन रेजिस्टेंस और स्क्वायर वेव सिग्नल चेक करें।",
+            "चरण 3 (शंट टॉर्क इंस्पेक्शन): कॉपर शंट बार के बोल्ट का टॉर्क 9.5 Nm पर जांचें; डिस्कलरेशन देखें।",
+            "चरण 4 (चाइल्ड-पार्ट रीप्लेसमेंट): पूरा बैटरी पैक न बदलें! केवल करंट सेंसर मॉड्यूल बदलें और TDS से जीरो-ऑफसेट कैलिब्रेशन करें।"
+          ],
+          "childPart": { "partNo": "BJB-CUR-9921", "name": "BJB Current Shunt Sensor Kit", "priceINR": 3450 }
+        },
+        "P0AA6": {
+          "code": "P0AA6",
+          "title": "Hybrid/EV Battery Voltage System Isolation Fault (< 500 Ω/V)",
+          "model": "Tata Nexon EV / Tiago EV / Curvv EV",
+          "severity": "CRITICAL (Contactor Open - No READY Drive)",
+          "system": "High Voltage 400V DC Isolation Barrier",
+          "hindiGuide": [
+            "चरण 1 (MSD लॉकाउट): इग्निशन बंद करें, 10 मिनट कैपेसिटर डिस्चार्ज का इंतजार करें और MSD प्लग LOTO बॉक्स में रखें।",
+            "चरण 2 (मेगर 500V DC टेस्ट): बैटरी पॉजिटिव व नेगेटिव से चेसिस ग्राउंड का आइसोलेशन नापें (मानक: > 500 MΩ)।",
+            "चरण 3 (ब्रांच डिस्कनेक्ट टेस्ट): HV AC कंप्रेसर, फिर PTC हीटर, फिर OBC/DC-DC कन्वर्टर को एक-एक करके डिस्कनेक्ट करें।",
+            "चरण 4 (दोषी कंपोनेंट पृथक्करण): जिस कंपोनेंट को हटाने से मेगर 500 MΩ दिखाए, वही कंपोनेंट लीकेज का कारण है।"
+          ],
+          "childPart": { "partNo": "PTC-HTR-400V", "name": "High Voltage PTC Cabin Heater", "priceINR": 14200 }
+        },
+        "P0841": {
+          "code": "P0841",
+          "title": "DCA Dual-Clutch Transmission Hydraulic Pressure Range/Performance",
+          "model": "Tata Altroz DCA / Safari / Harrier / Curvv DCA",
+          "severity": "HIGH (1st to 2nd Gear Shudder / Overheat Warning)",
+          "system": "Wet Dual-Clutch Electro-Hydraulic Mechatronic Unit",
+          "hindiGuide": [
+            "चरण 1 (हाइड्रोलिक प्रेशर लाइव डेटा): TDS पर लाइन प्रेशर 1 चेक करें (आइडल पर 4.2 – 4.8 bar होना चाहिए)।",
+            "चरण 2 (सोलेनोइड कॉइल रेजिस्टेंस): मेकाट्रॉनिक कनेक्टर के पिन 4 और 7 पर रेजिस्टेंस नापें (मानक: 12.4 Ω ± 0.6 Ω)।",
+            "चरण 3 (चाइल्ड-पार्ट सोलेनोइड स्वैप): पूरा 1.85 लाख का गियरबॉक्स न बदलें! सोलेनोइड वाल्व ब्लॉक किट बदलें।",
+            "चरण 4 (टचपॉइंट एडेप्टेशन): 15 मिनट का TDS वेट-क्लच टचपॉइंट सॉफ्टवेयर री-लर्निंग चलाएं।"
+          ],
+          "childPart": { "partNo": "2871-5420-0104", "name": "DCA Mechatronic Solenoid Valve Block Assembly", "priceINR": 18500 }
+        }
+      },
+      "acousticFrequencies": {
+        "140Hz": { "component": "Front Lower Control Arm Bushing Tear", "range": "120 – 180 Hz", "hindi": "सस्पेंशन लोअर आर्म बुश फटा हुआ है। 20-40 km/h पर गड्ढों में ठक-ठक आवाज।" },
+        "920Hz": { "component": "Ceramic Brake Pad Glaze & Caliper Pin Wear", "range": "850 – 1100 Hz", "hindi": "ब्रेक पैड 2.1mm से नीचे घिस चुके हैं। हाई-स्पीड ब्रेक लगाने पर तीखी चीं-चीं आवाज।" },
+        "2600Hz": { "component": "Alternator Freewheel Pulley Bearing Seizure", "range": "2200 – 3000 Hz", "hindi": "अल्टरनेटर पुली बेयरिंग सूखी है। इंजन रेव करने पर हाई-पिच सीटी जैसी आवाज।" }
+      }
+    },
+    "worksManager": {
+      "role": "18-Bay Constraint Satisfaction (CSP) Floor Controller",
+      "bayCategories": {
+        "EXPRESS_LUBE": { "bays": [1, 2, 3], "targetTurnaround": "45 to 60 Minutes", "allowedJobs": ["PMS_10K", "OIL_FILTER_CHANGE", "WIPER_PAD_SWAP"] },
+        "GENERAL_MECHANICAL": { "bays": [4, 6, 8, 9, 10, 11, 12, 13], "targetTurnaround": "2.5 to 4.5 Hours", "allowedJobs": ["SUSPENSION_OVERHAUL", "CLUTCH_BRAKE_MAJOR", "PMS_40K"] },
+        "EV_HV_INSULATED": { "bays": [5], "targetTurnaround": "Specialized", "safetyMandate": "1000V Insulated Floor, Class 0 PPE, Certified L3 Tech Only" },
+        "DCA_CLEANROOM": { "bays": [7], "targetTurnaround": "Specialized", "cleanlinessMandate": "Dust-free climate controlled, hydraulic calibration bench" },
+        "WASHING_DETAILING": { "bays": [16, 17, 18], "throughputPace": "12 minutes/car automated wash" }
+      },
+      "qcRoadTestGate": {
+        "mandatoryDistanceKm": 5.0,
+        "checkpoints": [
+          "1. 80 km/h Highway Vibration Test on Indore Bypass",
+          "2. Emergency Braking ABS Pedal Pulse & Straight-line Tracking",
+          "3. Steering Return-to-Center after U-Turn",
+          "4. HVAC Cooling & Cabin NVH Evaluation"
+        ]
+      }
+    },
+    "warrantyOfficer": {
+      "role": "Zero-Rejection Warranty Fortress & e-DMS Siebel Bridge",
+      "fourMandatoryPhotoRules": {
+        "Angle1_ChassisVIN": "Crisp macro photo of B-pillar VIN plate and stamped engine bay chassis code (Zero digital zoom crop).",
+        "Angle2_OdometerCluster": "Live ignition ON instrument cluster showing timestamp, exact mileage (km), and warning lights.",
+        "Angle3_DefectivePartBarcode": "Uninstalled defective component showing Tata OEM holographic logo and part barcode sticker.",
+        "Angle4_NewPartInstalled": "Verified installation photo of new genuine OEM part fitted in vehicle bay before road test sign-off."
+      },
+      "prsThresholds": {
+        "level1_worksManager": "< ₹15,000",
+        "level2_tsmApproval": "₹15,000 – ₹75,000 (Turbochargers, Steering Racks, Inverters)",
+        "level3_rmccApproval": "> ₹75,000 (Complete Engine, DCA Gearbox, EV Battery Pack)"
+      },
+      "retentionLock": "Defective components retained in locked scrap cage for 90 days for Pune QA sample audits."
+    },
+    "creTelecaller": {
+      "role": "Outbound Win-Back Telephony & 6-Step WhatsApp Drip Retainer",
+      "predictiveOdometerCadence": {
+        "cityDailyCadence": "35 – 45 km/day",
+        "highwayFleetCadence": "55 – 80 km/day",
+        "serviceDueBufferDays": "15 days before predicted milestone"
+      },
+      "indoreValueClubModel": {
+        "targetVehicleAge": "Year 4+ (Vehicles > 36 Months)",
+        "incentives": "15% Flat Discount on Labor + ₹500 Tata Seva Points + Free Contactless Pickup/Drop",
+        "fngCounterStrategy": "Matches Dewas Naka / Pologround local garage pricing while retaining genuine OEM warranty and resale service logs."
+      },
+      "sixStepDripPlan": [
+        { "step": 1, "timing": "-7 Days", "channel": "WhatsApp", "name": "7-Day Pre-Due Odometer Milestone Reminder" },
+        { "step": 2, "timing": "-3 Days", "channel": "WhatsApp Media", "name": "3-Day Visual Health & Video Inspection Teaser" },
+        { "step": 3, "timing": "-1 Day", "channel": "WhatsApp Interactive", "name": "1-Day VIP 9:00 AM Priority Bay Reservation" },
+        { "step": 4, "timing": "+3 Days", "channel": "WhatsApp Voucher", "name": "Indore Value Club 15% VIP Retainer Voucher" },
+        { "step": 5, "timing": "+7 Days", "channel": "WhatsApp Media", "name": "Monsoon & Pre-Highway Trip Pass" },
+        { "step": 6, "timing": "+14 Days", "channel": "Direct Voice", "name": "Dedicated Senior SA Direct Line & Free Doorstep Pickup" }
+      ]
+    },
+    "billingCashier": {
+      "role": "GST Tax Invoicing & Cryptographic Gate Pass Fortress",
+      "taxSplitMath": {
+        "laborSAC": "998714",
+        "laborGSTRate": 18,
+        "laborCGST": 9,
+        "laborSGST": 9,
+        "sparesHSN": "87082900",
+        "sparesGSTRate": 28,
+        "sparesCGST": 14,
+        "sparesSGST": 14
+      },
+      "gatePassSecurity": {
+        "algorithm": "SHA-256 Digest Token",
+        "guardVerificationPin": "9901",
+        "barrierTrigger": "Exit Barrier Gate #1 opens only upon cryptographic payment reconciliation"
+      }
+    }
+  }
+}

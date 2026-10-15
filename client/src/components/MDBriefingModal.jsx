@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Smartphone, Send, CheckCircle2, X, TrendingUp, Users, AlertTriangle, Trophy, Sparkles, Clock, Check } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { openWhatsApp, buildMDBriefingMessage } from '../lib/whatsapp';
 
 export default function MDBriefingModal({ isOpen = true, onClose, inline = false }) {
   const [briefing, setBriefing] = useState(null);
@@ -27,12 +28,33 @@ export default function MDBriefingModal({ isOpen = true, onClose, inline = false
     try {
       const res = await fetch('/api/briefing/send-to-md', { method: 'POST' });
       const data = await res.json();
-      if (data.success) {
-        setSendSuccess(data.data.message);
-        confetti({ particleCount: 70, spread: 60 });
-      }
+      
+      // 1-Tap WhatsApp trigger
+      const message = briefing?.sampleWhatsAppMessage || buildMDBriefingMessage({
+        expectedRevenue: briefing?.metrics?.yesterdayLaborRevenue ? briefing.metrics.yesterdayLaborRevenue * 3.5 : 842500,
+        yesterdayRevenue: briefing?.metrics?.yesterdayLaborRevenue || 242500,
+        todayBookings: briefing?.metrics?.todayBookedAppointments || 38,
+        criticalPartsCount: briefing?.metrics?.interDealerPartsPending || 2,
+        escalationsCount: briefing?.metrics?.activeEscalationAlerts || 1,
+      });
+
+      openWhatsApp({
+        phone: briefing?.recipient || '919893011223',
+        message: message,
+        newTab: true
+      });
+
+      setSendSuccess(data.success ? data.data.message : 'MD Executive Digest opened in 1-Tap WhatsApp!');
+      confetti({ particleCount: 70, spread: 60 });
     } catch (err) {
       console.error(err);
+      // Fallback direct open
+      openWhatsApp({
+        phone: '919893011223',
+        message: buildMDBriefingMessage({}),
+        newTab: true
+      });
+      setSendSuccess('MD Executive Digest opened in 1-Tap WhatsApp!');
     } finally {
       setSending(false);
     }
@@ -109,13 +131,13 @@ export default function MDBriefingModal({ isOpen = true, onClose, inline = false
           </div>
 
           <div className="p-4 bg-white rounded-xl shadow-xs border border-emerald-200/70 text-xs text-slate-800 leading-relaxed font-mono whitespace-pre-line">
-            {briefing?.sampleWhatsAppMessage || `🌅 Good morning Chetan Sir!
-Sanghi Brothers Tata Daily Executive Digest:
+            {briefing?.sampleWhatsAppMessage || `🌅 Good morning Shyam Sir!
+Shyam Automotive Tata Daily Executive Digest (Scheme 140 Flagship):
 📋 38 Service Bookings Today (14 Nexon EV, 11 Harrier/Safari, 13 Punch/Altroz)
 💰 Yesterday Labor Revenue: ₹2,42,500 (+18% vs target)
 ⚠️ 1 Customer Agitation Alert (Escalation Radar flagged Bay 5)
-📦 2 Parts En Route from Sanghi Bypass Store
-🏆 Top Advisor: Rahul Sharma (3 Extended Warranties Closed)`}
+📦 2 Parts En Route from Shyam Dewas Depot
+🏆 Top Advisor: Amit Sharma (3 Extended Warranties Closed)`}
           </div>
         </div>
 

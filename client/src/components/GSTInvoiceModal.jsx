@@ -14,15 +14,19 @@ import {
   Hash,
   Sparkles
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import { openWhatsApp, buildGSTInvoiceMessage } from '../lib/whatsapp';
+import { MessageSquare } from 'lucide-react';
+import BillingCashierAgentModal from './BillingCashierAgentModal';
 
 export default function GSTInvoiceModal({ 
   jobCardId, 
   jobCards = [], 
   isOpen = true, 
   onClose, 
-  inline = false 
+  inline = false,
+  onDataRefresh 
 }) {
+  const [showBillingCashierAgentModal, setShowBillingCashierAgentModal] = useState(false);
   const [selectedId, setSelectedId] = useState(jobCardId || (jobCards.length > 0 ? jobCards[0].id : 'jc-8899'));
   const [invoice, setInvoice] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -54,36 +58,69 @@ export default function GSTInvoiceModal({
     window.print();
   };
 
+  const handleWhatsAppShare = () => {
+    if (!invoice) return;
+    const msg = buildGSTInvoiceMessage({
+      customerName: invoice.customer?.name || 'Valued Customer',
+      vehicleModel: invoice.vehicle?.model || 'Tata Harrier',
+      regNo: invoice.vehicle?.regNo || 'MP-09-CX-1234',
+      invoiceNo: invoice.invoiceNumber,
+      totalAmount: invoice.financials?.grandTotal || 24650,
+      upiVpa: invoice.payment?.upiVpa || 'shyamautomotive@icici',
+      advisorName: invoice.dealership?.name || 'Shyam Automotive Tata Motors (Scheme 140)'
+    });
+
+    openWhatsApp({
+      phone: invoice.customer?.phone || '919826012345',
+      message: msg,
+      newTab: true
+    });
+    confetti({ particleCount: 50, spread: 60 });
+  };
+
   return (
-    <div className={`bg-white border border-slate-200 w-full ${inline ? 'rounded-3xl shadow-sm' : 'max-w-4xl rounded-3xl shadow-2xl my-8'} overflow-hidden`}>
+    <div className={`bg-white border border-slate-200 w-full ${inline ? 'rounded-3xl shadow-sm' : 'max-w-4xl rounded-3xl shadow-2xl my-8'} overflow-hidden printable-document`}>
       {/* Header Actions (Hidden on print) */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-900 text-white print:hidden">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 sm:px-6 py-4 border-b border-slate-200 bg-white text-slate-900 gap-4 print:hidden">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-blue-600 text-white rounded-xl shadow-md shadow-blue-500/20">
+          <div className="p-2.5 bg-blue-600 text-white rounded-xl shadow-md shadow-blue-500/20 shrink-0">
             <FileText className="w-5 h-5" />
           </div>
           <div>
-            <div className="flex items-center space-x-2">
-              <span className="font-bold text-white text-base tracking-tight">Official GST Tax Invoice Console</span>
-              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full border border-emerald-500/40 font-mono font-bold uppercase">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-bold text-slate-900 text-base tracking-tight">Official GST Tax Invoice Console</span>
+              <span className="text-[10px] bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full border border-emerald-200 font-mono font-bold uppercase">
                 Tax Compliant Document
               </span>
             </div>
-            <p className="text-xs text-slate-400">Auto-generates official CGST 9% + SGST 9% itemized service and parts tax invoices</p>
+            <p className="text-xs text-slate-500">Auto-generates official CGST 9% + SGST 9% itemized service and parts tax invoices</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+          <button
+            onClick={() => setShowBillingCashierAgentModal(true)}
+            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-black rounded-xl transition-all cursor-pointer shadow-sm ring-2 ring-emerald-400/20 animate-pulse"
+          >
+            <CreditCard className="w-4 h-4 text-emerald-100" />
+            <span>Launch Billing Officer</span>
+          </button>
+          <button
+            onClick={handleWhatsAppShare}
+            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition-all cursor-pointer shadow-sm"
+          >
+            <MessageSquare className="w-4 h-4" /> 1-Tap WhatsApp + UPI
+          </button>
           <button
             onClick={handlePrint}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all cursor-pointer shadow-md shadow-blue-600/20"
+            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all cursor-pointer shadow-sm"
           >
-            <Printer className="w-4 h-4" /> Print / Save Official PDF
+            <Printer className="w-4 h-4" /> Print / PDF
           </button>
           {!inline && onClose && (
             <button
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
+              className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -113,7 +150,25 @@ export default function GSTInvoiceModal({
           Generating official tax invoice breakdown...
         </div>
       ) : invoice ? (
-        <div className="p-8 sm:p-10 bg-white text-slate-900 text-xs font-sans leading-relaxed print:p-4">
+        <div id="printable-tax-invoice" className="p-8 sm:p-10 bg-white text-slate-900 text-xs font-sans leading-relaxed print:p-4">
+          <style>{`
+            @media print {
+              body * { visibility: hidden !important; }
+              #printable-tax-invoice, #printable-tax-invoice * { visibility: visible !important; }
+              #printable-tax-invoice {
+                position: fixed !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 24px !important;
+                background: white !important;
+                box-shadow: none !important;
+                border: none !important;
+                z-index: 99999 !important;
+              }
+            }
+          `}</style>
           {/* Top Dealership Official Letterhead */}
           <div className="flex justify-between items-start border-b-2 border-slate-900 pb-5 mb-5">
             <div>
@@ -130,7 +185,7 @@ export default function GSTInvoiceModal({
             </div>
 
             <div className="text-right">
-              <span className="inline-block px-3 py-1 bg-slate-900 text-white font-black text-xs tracking-wider uppercase rounded-md mb-2">
+              <span className="inline-block px-3 py-1 bg-blue-600 text-white font-black text-xs tracking-wider uppercase rounded-md mb-2">
                 TAX INVOICE (RULE 46)
               </span>
               <div className="font-mono text-xs">
@@ -165,7 +220,7 @@ export default function GSTInvoiceModal({
           </div>
 
           {/* Line Items Table */}
-          <div className="border border-slate-300 rounded-xl overflow-hidden mb-6">
+          <div className="border border-slate-300 rounded-xl overflow-x-auto mb-6">
             <table className="w-full text-left divide-y divide-slate-300">
               <thead className="bg-slate-100 text-[11px] font-bold text-slate-800 uppercase tracking-wider">
                 <tr>
@@ -208,16 +263,16 @@ export default function GSTInvoiceModal({
             <div className="sm:col-span-7 p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-start gap-4">
               <div className="p-2 bg-white rounded-xl border border-slate-200 shrink-0 shadow-xs">
                 {/* Dynamic QR Representation */}
-                <div className="w-24 h-24 bg-slate-900 rounded-lg flex flex-col items-center justify-center text-white text-center p-1">
-                  <QrCode className="w-12 h-12 text-white mb-1" />
-                  <span className="text-[8px] font-mono">SCAN TO PAY</span>
+                <div className="w-24 h-24 bg-white border-2 border-slate-800 rounded-lg flex flex-col items-center justify-center text-slate-900 text-center p-1">
+                  <QrCode className="w-12 h-12 text-slate-900 mb-1" />
+                  <span className="text-[8px] font-mono font-bold">SCAN TO PAY</span>
                 </div>
               </div>
 
               <div className="text-[11px] text-slate-600 space-y-1">
                 <span className="font-bold text-slate-900 block text-xs">Instant Digital Payment Gateway</span>
-                <p>UPI ID: <strong className="font-mono text-blue-700">sanghibrothers@icici</strong></p>
-                <p>Authorized Payment Modes: UPI, Razorpay No-Cost EMI, Tata Motors Warranty Settlement.</p>
+                <p>UPI ID: <strong className="font-mono text-blue-700">shyamautomotive@icici</strong></p>
+                <p>Authorized Payment Modes: Dealership Physical EDC (Card), Bank RTGS/NEFT, Dealership Cash Desk, Tata Motors Warranty Settlement.</p>
                 <p className="text-[10px] text-slate-400 mt-1">E. & O.E. • Goods once sold are backed by Tata OEM Warranty.</p>
               </div>
             </div>
@@ -262,6 +317,12 @@ export default function GSTInvoiceModal({
           </div>
         </div>
       ) : null}
+
+      <BillingCashierAgentModal
+        isOpen={showBillingCashierAgentModal}
+        onClose={() => setShowBillingCashierAgentModal(false)}
+        onDataRefresh={onDataRefresh}
+      />
     </div>
   );
 }

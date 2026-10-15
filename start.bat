@@ -2,7 +2,7 @@
 title NatureXpress Tata Dealership OS
 echo ===============================================================================
 echo                NATUREXPRESS ENTERPRISE DEALERSHIP OS
-echo      Connected Workshop & High-Margin Revenue Engine for Tata Motors
+echo      Connected Workshop ^& High-Margin Revenue Engine for Tata Motors
 echo ===============================================================================
 echo.
 
@@ -29,5 +29,5 @@ echo  Frontend: http://localhost:3000
 echo  Backend:  http://localhost:5000
 echo ===============================================================================
 echo.
-timeout /t 3 >nul
+ping 127.0.0.1 -n 4 >nul
 start http://localhost:3000

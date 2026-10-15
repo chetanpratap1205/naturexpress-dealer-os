@@ -37,3 +37,7 @@ lerna-debug.log*
 # System & AI cache
 .system_generated/
 .gemini/
+
+# SQLite temporary WAL/SHM locks
+*.db-wal
+*.db-shm

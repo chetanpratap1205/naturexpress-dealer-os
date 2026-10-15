@@ -24,7 +24,6 @@ import {
   Clock
 } from 'lucide-react';
 import AuthModal from './AuthModal';
-import WhatsAppGatewayModal from './WhatsAppGatewayModal';
 import CSIIntegrityShield from './CSIIntegrityShield';
 import GSTInvoiceModal from './GSTInvoiceModal';
 import TataCareInsuranceModal from './TataCareInsuranceModal';
@@ -58,14 +57,14 @@ export default function Header({
     { id: 'customer', label: 'Customer Cockpit', icon: Smartphone, badge: 'WhatsApp App' },
     { id: 'sa', label: 'SA Digital Tablet', icon: UserCheck, badge: 'Advisor Desk' },
     { id: 'parts', label: 'Indore Parts Swarm', icon: Network, badge: '90m ETA', highlight: true },
-    { id: 'shield', label: 'AI Warranty Shield', icon: ShieldCheck, badge: 'Zero-Reject' },
+    { id: 'shield', label: 'Warranty Shield', icon: ShieldCheck, badge: 'Zero-Reject' },
     { id: 'techdiag', label: 'Tech Guided Terminal', icon: Wrench, badge: 'FTR 95%+' },
     { id: 'ew', label: 'EW Configurator', icon: ShieldCheck, badge: '+₹4.2L/mo' },
     { id: 'campaigns', label: 'Marketing Drives', icon: Radio, badge: 'Win-Back' },
     { id: 'leaderboard', label: 'Staff Leaderboard', icon: TrendingUp, badge: 'Gamified' },
     { id: 'valueclub', label: 'Indore Value Club', icon: Award, badge: 'Post-Yr 3' },
     { id: 'ccm', label: 'CCM Escalation Radar', icon: AlertTriangle, badge: 'OEM Alert' },
-    { id: 'cre', label: 'AI Telephony CRM', icon: PhoneCall, badge: 'Calling Desk' },
+    { id: 'cre', label: 'Telephony CRM Desk', icon: PhoneCall, badge: 'Calling Desk' },
     { id: 'bays', label: 'Floor & Bay Grid', icon: LayoutGrid, badge: 'Sequencer' },
     { id: 'roi', label: 'Dealer ROI Math', icon: TrendingUp, badge: '+₹16L/mo' }
   ];
@@ -81,17 +80,20 @@ export default function Header({
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-black text-lg tracking-tight text-blue-950">
-                  NatureXpress
+                <span className="font-black text-lg tracking-tight text-slate-900">
+                  Shyam Automotive
                 </span>
                 <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-blue-100 text-blue-800 border border-blue-200 uppercase">
-                  TATA DEALERSHIP OS • ENTERPRISE EDITION
+                  TATA MOTORS DEALERSHIP OS
+                </span>
+                <span className="hidden sm:inline-flex items-center text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-50 text-amber-800 border border-amber-200">
+                  ★ 4.9 (1,237 reviews)
                 </span>
               </div>
               <p className="text-xs text-slate-500 flex items-center space-x-1.5">
-                <span className="font-semibold text-slate-800">{dealership?.name || 'Sanghi Brothers Tata Motors'}</span>
+                <span className="font-semibold text-slate-800">{dealership?.name || 'Shyam Automotive Tata Motors (Scheme 140)'}</span>
                 <span>•</span>
-                <span>{dealership?.cluster || 'Indore Territory Cluster'}</span>
+                <span>Scheme 140 Flagship Hub, Indore</span>
               </p>
             </div>
           </div>
@@ -141,7 +143,7 @@ export default function Header({
             {/* CSV Export Button */}
             <a
               href="/api/reports/export-csv?type=job_cards"
-              download="Tata_Sanghi_JobCards.csv"
+              download="Tata_Shyam_JobCards.csv"
               title="Export Job Cards to Excel/CSV (Point B9)"
               className="hidden md:flex items-center space-x-1 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 px-2.5 py-1.5 rounded-xl border border-slate-300 transition-colors cursor-pointer"
             >
@@ -283,11 +285,6 @@ export default function Header({
         onClose={() => setShowAuthModal(false)}
         currentUser={currentUser}
         onSelectUser={onSelectUser}
-      />
-
-      <WhatsAppGatewayModal
-        isOpen={showWhatsAppModal}
-        onClose={() => setShowWhatsAppModal(false)}
       />
 
       <CSIIntegrityShield

@@ -26,7 +26,7 @@ export default function AuthModal({ isOpen, onClose, currentUser, onSelectUser }
             <UserCheck className="w-5 h-5 text-blue-600" />
             <div>
               <h2 className="font-bold text-slate-900 text-base">Multi-Tenant Role Switcher & Authentication</h2>
-              <p className="text-xs text-slate-500">Sanghi Brothers (Tata Motors Indore) Stakeholder Matrix</p>
+              <p className="text-xs text-slate-500">Shyam Automotive (Tata Motors Scheme 140 Indore) Stakeholder Matrix</p>
             </div>
           </div>
           <button
@@ -38,12 +38,47 @@ export default function AuthModal({ isOpen, onClose, currentUser, onSelectUser }
         </div>
 
         {/* User Profiles Selection */}
-        <div className="p-6 space-y-3">
+        <div className="p-6 space-y-4">
           <p className="text-xs text-slate-600">
-            Select a verified dealership or OEM role to experience role-based views, permissions, and dashboards:
+            Select an executive, operational, or OEM role to switch dashboards, permissions, and workflow views:
           </p>
 
-          <div className="space-y-2">
+          {/* Quick Dealer Principal Top Banner */}
+          {users.find(u => u.role === 'DEALER_PRINCIPAL') && (
+            <div 
+              onClick={() => {
+                const dp = users.find(u => u.role === 'DEALER_PRINCIPAL');
+                onSelectUser(dp);
+                onClose();
+              }}
+              className="p-4 rounded-xl bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-md cursor-pointer hover:shadow-lg transition-all flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="text-3xl p-2 bg-white/10 rounded-xl border border-white/20 backdrop-blur-xs">
+                  👑
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-black text-white text-base">Shyam Singhal</span>
+                    <span className="text-[10px] font-mono bg-blue-500/40 text-blue-100 px-2 py-0.5 rounded-full border border-blue-400/30 font-bold uppercase">
+                      DEALER_PRINCIPAL / GM
+                    </span>
+                  </div>
+                  <p className="text-xs text-blue-100 mt-0.5 font-medium">Managing Director & Dealer Principal</p>
+                  <p className="text-[11px] text-blue-200/80 font-mono">md@shyamautomotive.com • Full P&L & Floor Control</p>
+                </div>
+              </div>
+              <span className="px-3 py-1.5 rounded-lg bg-white text-blue-900 font-bold text-xs shadow-xs group-hover:bg-blue-50 transition-colors">
+                Switch to DP ➔
+              </span>
+            </div>
+          )}
+
+          <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider pt-1">
+            All Dealership & OEM Roles ({users.length})
+          </div>
+
+          <div className="space-y-2 max-h-[380px] overflow-y-auto pr-1">
             {users.map((u) => (
               <div
                 key={u.id}

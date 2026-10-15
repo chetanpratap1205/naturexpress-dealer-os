@@ -32,7 +32,7 @@ export default function OEMBatchDefectRadar({ isOpen = true, onClose, inline = f
                 Territory Intelligence
               </span>
             </div>
-            <p className="text-xs text-slate-500">Cross-dealer failure clustering across Sanghi, Shyam & Jagdish Motors (Indore Territory)</p>
+            <p className="text-xs text-slate-500">Cross-dealer failure clustering across Shyam Automotive (Scheme 140 & Dewas Depot), Sanghi Brothers & Jagdish Motors (Indore Territory)</p>
           </div>
         </div>
 

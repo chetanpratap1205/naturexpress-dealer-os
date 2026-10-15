@@ -20,7 +20,16 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
+import {
+  openWhatsApp,
+  buildInsuranceQuoteMessage,
+  buildVideoApprovalMessage,
+  buildEWProposalMessage,
+  buildServiceDueMessage
+} from '../lib/whatsapp';
+
 export default function ActionCenter({
+  dealership,
   revenueOpportunities = [],
   revenueRadar = null,
   onExecuteOpportunity,
@@ -52,6 +61,57 @@ export default function ActionCenter({
   const handleAction = async (opp) => {
     setExecutingId(opp.id);
     try {
+      // 1. Build context-aware 1-Tap WhatsApp Message
+      let whatsappText = '';
+      if (opp.category === 'INSURANCE' || opp.categoryKey === 'INSURANCE') {
+        whatsappText = buildInsuranceQuoteMessage({
+          customerName: opp.customerName,
+          vehicleModel: opp.vehicle,
+          regNo: opp.regNo,
+          premiumAmount: opp.grossValue || 14200,
+          dealerCashback: opp.marginValue ? Math.round(opp.marginValue * 0.4) : 1500,
+          advisorName: `${opp.assignedSA || 'Amit Verma'} (${dealership?.shortName || dealership?.name || 'Shyam Tata'})`
+        });
+      } else if (opp.category === 'UNAPPROVED_ESTIMATE' || opp.categoryKey === 'UNAPPROVED_ESTIMATE') {
+        whatsappText = buildVideoApprovalMessage({
+          customerName: opp.customerName,
+          vehicleModel: opp.vehicle,
+          regNo: opp.regNo,
+          itemTitle: opp.title,
+          estimateAmount: opp.grossValue || 8500,
+          estimateToken: opp.token || opp.jobCardId || 'demo-token-nexon-9011',
+          advisorName: `${opp.assignedSA || 'Amit Verma'} (${dealership?.shortName || dealership?.name || 'Shyam Tata'})`
+        });
+      } else if (opp.category === 'EXTENDED_WARRANTY' || opp.categoryKey === 'EXTENDED_WARRANTY') {
+        whatsappText = buildEWProposalMessage({
+          customerName: opp.customerName,
+          vehicleModel: opp.vehicle,
+          regNo: opp.regNo,
+          planName: opp.title,
+          totalAmount: opp.grossValue || 24500,
+          noCostEmi: Math.round((opp.grossValue || 24500) / 12),
+          advisorName: `${dealership?.shortName || dealership?.name || 'Shyam Tata'} Care Team`
+        });
+      } else if (opp.category === 'OVERDUE_SERVICE' || opp.categoryKey === 'OVERDUE_SERVICE') {
+        whatsappText = buildServiceDueMessage({
+          customerName: opp.customerName,
+          vehicleModel: opp.vehicle,
+          regNo: opp.regNo,
+          serviceStage: opp.title,
+          advisorName: `${dealership?.shortName || dealership?.name || 'Shyam Tata'} Service`
+        });
+      } else {
+        whatsappText = `🚗 *TATA MOTORS DEALERSHIP NOTIFICATION*\nNamaste ${opp.customerName} ji,\n\nRegarding your *${opp.vehicle} (${opp.regNo})*: ${opp.title}.\n\nEstimated Value: ₹${opp.grossValue?.toLocaleString('en-IN')}.\n\nReply YES to confirm or contact your advisor ${opp.assignedSA || dealership?.name || 'Shyam Automotive'}.`;
+      }
+
+      // 2. Launch 1-Tap WhatsApp Web/App
+      openWhatsApp({
+        phone: opp.phone || '919826012345',
+        message: whatsappText,
+        newTab: true
+      });
+
+      // 3. Persist Action & Lock Margin
       if (onExecuteOpportunity) {
         await onExecuteOpportunity(opp.id);
       } else {
@@ -60,8 +120,8 @@ export default function ActionCenter({
       }
 
       confetti({
-        particleCount: 50,
-        spread: 60,
+        particleCount: 60,
+        spread: 70,
         origin: { y: 0.6 }
       });
     } catch (e) {
@@ -115,7 +175,7 @@ export default function ActionCenter({
           <button
             onClick={() => setSelectedCategory('ALL')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
-              selectedCategory === 'ALL' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              selectedCategory === 'ALL' ? 'bg-blue-600 text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
             All ({revenueOpportunities.length})

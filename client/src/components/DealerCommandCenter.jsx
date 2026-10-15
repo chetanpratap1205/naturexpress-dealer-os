@@ -25,9 +25,20 @@ import {
   ExternalLink,
   Layers,
   BarChart3,
-  CreditCard
+  CreditCard,
+  Crown,
+  Compass
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import {
+  openWhatsApp,
+  buildInsuranceQuoteMessage,
+  buildVideoApprovalMessage,
+  buildEWProposalMessage,
+  buildServiceDueMessage,
+  buildMDBriefingMessage
+} from '../lib/whatsapp';
+import DealerPrincipalAgentModal from './DealerPrincipalAgentModal';
 
 export default function DealerCommandCenter({
   dealership,
@@ -45,6 +56,7 @@ export default function DealerCommandCenter({
   const [selectedOpp, setSelectedOpp] = useState(null);
   const [executingId, setExecutingId] = useState(null);
   const [showBriefingPreview, setShowBriefingPreview] = useState(false);
+  const [showMDAgentModal, setShowMDAgentModal] = useState(false);
   const [briefingSent, setBriefingSent] = useState(false);
   const [actionSuccessToast, setActionSuccessToast] = useState(null);
 
@@ -73,6 +85,55 @@ export default function DealerCommandCenter({
   const handleQuickAction = async (opp) => {
     setExecutingId(opp.id);
     try {
+      // 1. Context-aware 1-Tap WhatsApp builder
+      let whatsappText = '';
+      if (opp.category === 'INSURANCE' || opp.categoryKey === 'INSURANCE') {
+        whatsappText = buildInsuranceQuoteMessage({
+          customerName: opp.customerName,
+          vehicleModel: opp.vehicle,
+          regNo: opp.regNo,
+          premiumAmount: opp.grossValue || 14200,
+          dealerCashback: opp.marginValue ? Math.round(opp.marginValue * 0.4) : 1500,
+          advisorName: `${opp.assignedSA || 'Amit Verma'} (${dealership?.shortName || dealership?.name || 'Shyam Tata'})`
+        });
+      } else if (opp.category === 'UNAPPROVED_ESTIMATE' || opp.categoryKey === 'UNAPPROVED_ESTIMATE') {
+        whatsappText = buildVideoApprovalMessage({
+          customerName: opp.customerName,
+          vehicleModel: opp.vehicle,
+          regNo: opp.regNo,
+          itemTitle: opp.title,
+          estimateAmount: opp.grossValue || 8500,
+          estimateToken: opp.token || opp.jobCardId || 'demo-token-nexon-9011',
+          advisorName: `${opp.assignedSA || 'Amit Verma'} (${dealership?.shortName || dealership?.name || 'Shyam Tata'})`
+        });
+      } else if (opp.category === 'EXTENDED_WARRANTY' || opp.categoryKey === 'EXTENDED_WARRANTY') {
+        whatsappText = buildEWProposalMessage({
+          customerName: opp.customerName,
+          vehicleModel: opp.vehicle,
+          regNo: opp.regNo,
+          planName: opp.title,
+          totalAmount: opp.grossValue || 24500,
+          noCostEmi: Math.round((opp.grossValue || 24500) / 12),
+          advisorName: `${dealership?.shortName || dealership?.name || 'Shyam Tata'} Care Team`
+        });
+      } else if (opp.category === 'OVERDUE_SERVICE' || opp.categoryKey === 'OVERDUE_SERVICE') {
+        whatsappText = buildServiceDueMessage({
+          customerName: opp.customerName,
+          vehicleModel: opp.vehicle,
+          regNo: opp.regNo,
+          serviceStage: opp.title,
+          advisorName: `${dealership?.shortName || dealership?.name || 'Shyam Tata'} Service`
+        });
+      } else {
+        whatsappText = `🚗 *TATA MOTORS DEALERSHIP NOTIFICATION*\nNamaste ${opp.customerName} ji,\n\nRegarding your *${opp.vehicle} (${opp.regNo})*: ${opp.title}.\n\nEstimated Value: ₹${opp.grossValue?.toLocaleString('en-IN')}.\n\nReply YES to confirm or contact your advisor ${opp.assignedSA || dealership?.name || 'Shyam Automotive'}.`;
+      }
+
+      openWhatsApp({
+        phone: opp.phone || '919826012345',
+        message: whatsappText,
+        newTab: true
+      });
+
       if (onExecuteOpportunity) {
         await onExecuteOpportunity(opp.id);
       } else {
@@ -87,7 +148,7 @@ export default function DealerCommandCenter({
       });
 
       setActionSuccessToast({
-        title: `Action Executed: ${opp.actionLabel}`,
+        title: `Action Dispatched: ${opp.actionLabel}`,
         vehicle: `${opp.vehicle} (${opp.regNo})`,
         margin: `+₹${opp.marginValue.toLocaleString('en-IN')} Margin Locked`,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -103,6 +164,23 @@ export default function DealerCommandCenter({
 
   const handleSendMDBriefing = async () => {
     try {
+      const msg = buildMDBriefingMessage({
+        expectedRevenue: (dealership?.todayRevenue || 842500),
+        yesterdayRevenue: 242500,
+        bayUtilization: dealership?.bayUtilization || '78%',
+        todayBookings: activeVehiclesCount || 38,
+        criticalPartsCount: criticalShortages,
+        escalationsCount: criticalComplaints.length || 1,
+        recoveredToday: totalRecovered,
+        identifiedLeakage: totalLeakage
+      });
+
+      openWhatsApp({
+        phone: '919893011223',
+        message: msg,
+        newTab: true
+      });
+
       const res = await fetch('/api/briefing/send-to-md', { method: 'POST' });
       if (res.ok) {
         setBriefingSent(true);
@@ -111,6 +189,8 @@ export default function DealerCommandCenter({
       }
     } catch (e) {
       console.error(e);
+      setBriefingSent(true);
+      setTimeout(() => setBriefingSent(false), 4000);
     }
   };
 
@@ -118,18 +198,18 @@ export default function DealerCommandCenter({
     <div className="space-y-6 animate-fadeIn">
       {/* Toast Notification */}
       {actionSuccessToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-950 text-emerald-100 border border-emerald-500/60 p-4 rounded-2xl shadow-2xl flex items-center space-x-3.5 animate-slideUp">
-          <div className="p-2 bg-emerald-600 text-white rounded-xl">
-            <CheckCircle2 className="w-5 h-5" />
+        <div className="fixed bottom-6 right-6 z-50 bg-white text-slate-900 border-2 border-emerald-500 p-4 rounded-2xl shadow-2xl flex items-center space-x-3.5 animate-slideUp">
+          <div className="p-2 bg-emerald-100 text-emerald-700 rounded-xl">
+            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
           </div>
           <div>
-            <div className="font-bold text-sm text-white flex items-center gap-2">
+            <div className="font-bold text-sm text-slate-900 flex items-center gap-2">
               {actionSuccessToast.title}
-              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-mono px-2 py-0.5 rounded-full border border-emerald-500/40">
+              <span className="text-[10px] bg-emerald-100 text-emerald-800 font-mono px-2 py-0.5 rounded-full border border-emerald-300 font-bold">
                 {actionSuccessToast.margin}
               </span>
             </div>
-            <div className="text-xs text-emerald-300/80">
+            <div className="text-xs text-slate-600 font-medium">
               {actionSuccessToast.vehicle} • WhatsApp Dispatched ({actionSuccessToast.time})
             </div>
           </div>
@@ -137,55 +217,66 @@ export default function DealerCommandCenter({
       )}
 
       {/* Top Dealer Principal Executive Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-950 to-blue-950 text-white p-6 rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="bg-gradient-to-br from-white via-slate-50 to-blue-50/50 text-slate-900 p-6 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex items-center space-x-3">
-              <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 bg-blue-600/30 text-blue-300 border border-blue-500/40 rounded-full flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                Live Revenue & Operations Intelligence
+              <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 bg-blue-50 text-blue-700 border border-blue-200 rounded-full flex items-center gap-1.5 shadow-2xs">
+                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                Shyam Automotive • Live Operations Intelligence
               </span>
-              <span className="text-xs text-slate-400 font-mono">
+              <span className="text-xs text-slate-500 font-mono">
                 08:45 AM Executive Briefing Active
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               Dealer Command Center
             </h1>
-            <p className="text-sm text-slate-300 max-w-2xl leading-relaxed">
-              Monitoring {dealership?.name || "Sanghi Brothers Indore"} (18 Active Bays). 
+            <p className="text-sm text-slate-600 max-w-2xl leading-relaxed">
+              Monitoring {dealership?.name || "Shyam Automotive (Scheme 140)"} (18 Active Bays). 
               Real-time identification of uncaptured workshop revenue, critical customer friction, and technician throughput.
             </p>
           </div>
 
-          {/* Quick MD Briefing WhatsApp Trigger */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-slate-900/90 p-3 rounded-2xl border border-slate-800">
+          {/* Executive Strategic Advisor & WhatsApp Trigger */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-white p-3 rounded-2xl border border-slate-200 shadow-xs">
+            <button
+              onClick={() => setShowMDAgentModal(true)}
+              className="px-4 py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-md shadow-amber-500/20"
+            >
+              <Compass className="w-4 h-4 text-slate-950" />
+              <span>Executive Strategic Advisor</span>
+              <span className="text-[10px] bg-amber-900/20 text-amber-950 px-1.5 py-0.5 rounded font-mono font-bold">100% Math</span>
+            </button>
+
+            <div className="hidden sm:block w-px h-8 bg-slate-200"></div>
+
             <div className="text-left px-2">
-              <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                MD / GM WhatsApp Digest
+              <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                8:00 AM MD Digest
               </div>
-              <div className="text-xs font-bold text-slate-200">
-                Chetan Sanghi (+91 98260 00001)
+              <div className="text-xs font-bold text-slate-800">
+                {dealership?.mdName || 'Shyam Singhal'} ({dealership?.verifiedWhatsApp || '+91 88798 97825'})
               </div>
             </div>
             <button
               onClick={handleSendMDBriefing}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-md ${
+              className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-xs ${
                 briefingSent
                   ? 'bg-emerald-600 text-white'
-                  : 'bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold'
+                  : 'bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold'
               }`}
             >
               {briefingSent ? (
                 <>
                   <CheckCircle2 className="w-4 h-4 text-white" />
-                  <span>Briefing Sent to WhatsApp!</span>
+                  <span>Sent to WhatsApp!</span>
                 </>
               ) : (
                 <>
                   <Send className="w-4 h-4" />
-                  <span>Send 8:00 AM MD Digest</span>
+                  <span>Send 8 AM Digest</span>
                 </>
               )}
             </button>
@@ -716,10 +807,17 @@ export default function DealerCommandCenter({
             <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all" />
           </h3>
           <p className="text-xs text-slate-500 mt-1">
-            AI Zero-Rejection warranty fortress, CSI Integrity Shield, 45-min parts pool.
+            Zero-Rejection warranty fortress, CSI Integrity Shield, 45-min parts pool.
           </p>
         </div>
       </div>
+
+      {/* Dealer Principal Executive Strategic Advisor Console Modal */}
+      <DealerPrincipalAgentModal
+        isOpen={showMDAgentModal}
+        onClose={() => setShowMDAgentModal(false)}
+        onDataRefresh={onDataRefresh}
+      />
     </div>
   );
 }

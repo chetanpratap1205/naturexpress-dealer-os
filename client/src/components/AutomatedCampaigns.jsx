@@ -131,7 +131,7 @@ export default function AutomatedCampaigns({ campaigns, onDispatchCampaign }) {
                     WhatsApp Message Broadcast Template
                   </span>
                   <p className="font-mono text-slate-800 leading-relaxed">
-                    "🌟 *Exclusive Invitation from Sanghi Brothers Tata Motors, Indore!* We are running the *{activeCamp.title}*. Avail *{activeCamp.discount}*. Tap below to reserve your priority morning slot."
+                    "🌟 *Exclusive Invitation from Shyam Automotive Tata Motors (Scheme 140, Indore)!* We are running the *{activeCamp.title}*. Avail *{activeCamp.discount}*. Tap below to reserve your priority morning slot."
                   </p>
                 </div>
               </div>

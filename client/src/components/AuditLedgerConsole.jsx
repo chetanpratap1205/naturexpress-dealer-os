@@ -87,20 +87,20 @@ export default function AuditLedgerConsole({
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Top Compliance Header */}
-      <div className="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div className="bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
-            <span className="p-2 bg-emerald-600/30 text-emerald-400 border border-emerald-500/40 rounded-xl">
+            <span className="p-2 bg-emerald-50 text-emerald-600 border border-emerald-200 rounded-xl">
               <Lock className="w-5 h-5" />
             </span>
-            <h1 className="text-2xl font-black text-white tracking-tight">
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">
               Cryptographic Audit Ledger & Compliance Engine
             </h1>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40 font-mono uppercase">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-mono uppercase">
               SHA-256 Immutable
             </span>
           </div>
-          <p className="text-xs text-slate-400 max-w-2xl leading-relaxed">
+          <p className="text-xs text-slate-500 max-w-2xl leading-relaxed">
             Every operational state transition, financial override, customer authorization, and parts runner dispatch is cryptographically chained to prevent internal tampering or audit disputes.
           </p>
         </div>
@@ -110,16 +110,16 @@ export default function AuditLedgerConsole({
           <button
             onClick={handleVerifyIntegrity}
             disabled={verifying}
-            className="px-5 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-slate-950 font-black text-xs rounded-2xl flex items-center justify-center space-x-2 transition-all shadow-lg shadow-emerald-500/20 cursor-pointer disabled:opacity-50"
+            className="px-5 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs rounded-2xl flex items-center justify-center space-x-2 transition-all shadow-sm cursor-pointer disabled:opacity-50"
           >
             {verifying ? (
               <>
-                <RefreshCw className="w-4 h-4 animate-spin text-slate-950" />
+                <RefreshCw className="w-4 h-4 animate-spin text-white" />
                 <span>Auditing Hash Chain...</span>
               </>
             ) : (
               <>
-                <ShieldCheck className="w-4 h-4 text-slate-950" />
+                <ShieldCheck className="w-4 h-4 text-white" />
                 <span>Verify SHA-256 Chain Integrity</span>
               </>
             )}
@@ -131,8 +131,8 @@ export default function AuditLedgerConsole({
       {verificationResult && (
         <div className={`p-5 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
           verificationResult.verified
-            ? 'bg-emerald-950/80 border-emerald-500/60 text-emerald-100'
-            : 'bg-rose-950/80 border-rose-500/60 text-rose-100'
+            ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
+            : 'bg-rose-50 border-rose-200 text-rose-900'
         }`}>
           <div className="flex items-center space-x-3.5">
             <div className={`p-2.5 rounded-xl ${verificationResult.verified ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'}`}>
@@ -141,17 +141,17 @@ export default function AuditLedgerConsole({
             <div>
               <div className="font-bold text-sm flex items-center gap-2">
                 <span>Cryptographic Chain Status: {verificationResult.auditStatus}</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 border border-white/20">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300">
                   {verificationResult.totalEventsAudited} Events Verified
                 </span>
               </div>
-              <div className="text-xs text-emerald-300/80 font-mono mt-0.5 truncate max-w-xl">
+              <div className="text-xs text-emerald-700 font-mono mt-0.5 truncate max-w-xl">
                 Last Block Hash: {verificationResult.lastBlockHash}
               </div>
             </div>
           </div>
 
-          <div className="text-right text-xs font-semibold text-emerald-300">
+          <div className="text-right text-xs font-semibold text-emerald-700">
             0 Tampered Blocks Detected • Compliant with Tata OEM Audit Standards
           </div>
         </div>
@@ -166,11 +166,10 @@ export default function AuditLedgerConsole({
             onChange={(e) => setSelectedBranch(e.target.value)}
             className="px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-semibold text-slate-700 focus:outline-none focus:border-blue-500"
           >
-            <option value="ALL">All Branches (Indore Cluster)</option>
-            <option value="sanghi-bypass">Sanghi Central Bypass</option>
-            <option value="sanghi-manorama">Sanghi Manorama Ganj</option>
-            <option value="shyam-dewas">Shyam Dewas Rd</option>
-            <option value="jagdish-pithampur">Jagdish Pithampur</option>
+            <option value="ALL">All Branches (Shyam Network)</option>
+            <option value="shyam-scheme-140">Shyam Scheme 140 (HQ)</option>
+            <option value="shyam-dewas">Shyam Dewas Rd Depot</option>
+            <option value="shyam-rau">Shyam Rau Express Hub</option>
           </select>
 
           {/* Severity Filter */}
@@ -210,7 +209,7 @@ export default function AuditLedgerConsole({
             </span>
           </div>
           <div className="text-xs text-slate-400 font-mono">
-            Chain Anchor: SANGHI-GENESIS-2026
+            Chain Anchor: SHYAM-SCHEME140-GENESIS-2026
           </div>
         </div>
 
@@ -263,14 +262,14 @@ export default function AuditLedgerConsole({
                 </div>
 
                 {/* Cryptographic Hash Verification Block */}
-                <div className="bg-slate-950 text-slate-400 p-2.5 rounded-xl font-mono text-[10px] flex flex-col sm:flex-row sm:items-center justify-between gap-2 border border-slate-800">
+                <div className="bg-slate-50 text-slate-600 p-2.5 rounded-xl font-mono text-[10px] flex flex-col sm:flex-row sm:items-center justify-between gap-2 border border-slate-200">
                   <div className="truncate flex items-center space-x-2">
                     <span className="text-slate-500">SHA-256:</span>
-                    <span className="text-emerald-400 truncate">{event.sha256Hash}</span>
+                    <span className="text-emerald-700 font-semibold truncate">{event.sha256Hash}</span>
                   </div>
                   <div className="truncate flex items-center space-x-2 text-slate-500">
                     <span>PREV:</span>
-                    <span className="text-slate-400 truncate max-w-[120px]">{event.previousHash?.slice(0, 16)}...</span>
+                    <span className="text-slate-600 truncate max-w-[120px]">{event.previousHash?.slice(0, 16)}...</span>
                     <span>• IP: {event.ipAddress}</span>
                   </div>
                 </div>

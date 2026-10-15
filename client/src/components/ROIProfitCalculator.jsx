@@ -160,7 +160,7 @@ export default function ROIProfitCalculator({ dealership }) {
               },
               {
                 title: "4. Eliminated OEM Warranty Claim Rejections",
-                desc: "Zero claim write-offs via AI freeze-frame pre-audit",
+                desc: "Zero claim write-offs via freeze-frame pre-audit",
                 gain: warrantyLossSaved
               },
               {

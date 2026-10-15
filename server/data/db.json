@@ -1,22 +1,29 @@
 {
   "dealership": {
-    "id": "sanghi-indore-01",
-    "name": "Sanghi Brothers (Tata Motors)",
-    "cluster": "Indore Central - Bypass & Manorama Ganj",
-    "phone": "+91 731 4055000",
-    "verifiedWhatsApp": "+91 98930 11223",
+    "id": "shyam-scheme-140",
+    "branchId": "shyam-scheme-140",
+    "name": "Shyam Automotive - Scheme 140 (Flagship Hub)",
+    "cluster": "Indore East - Scheme 140 & Bicholi Mardana (Opp Agarwal Public School)",
+    "phone": "+91 88798 97825",
+    "verifiedWhatsApp": "+91 88798 97825",
     "activeBays": 18,
-    "totalTechnicians": 24,
+    "totalTechnicians": 22,
     "liveThroughputToday": 42,
-    "gstin": "23AABCS1429B1Z8",
-    "pan": "AABCS1429B",
-    "address": "Plot 14-B, A.B. Road, Bypass Junction, Indore, Madhya Pradesh 452010"
+    "gstin": "23AAMCS8912P1ZN",
+    "pan": "AAMCS8912P",
+    "address": "Infront of Agarwal Public School, Gram, Khasra No.15/3/4, Scheme No 140 Main Road, Bicholi Mardana Rd, Indore 452016",
+    "website": "https://shyamautomotive.com",
+    "googleRating": 4.9,
+    "googleReviewsCount": 1237,
+    "mdName": "Shyam Singhal",
+    "mdPhone": "+91 88798 97825",
+    "upiVpa": "shyamautomotive@icici"
   },
   "users": [
     {
       "id": "usr-01",
-      "name": "Chetan Sanghi",
-      "email": "chetan@sanghitata.in",
+      "name": "Shyam Singhal",
+      "email": "md@shyamautomotive.com",
       "role": "DEALER_PRINCIPAL",
       "title": "Managing Director / Dealer Principal",
       "avatar": "👑",
@@ -31,7 +38,7 @@
     {
       "id": "usr-02",
       "name": "Amit Sharma",
-      "email": "amit.sa@sanghitata.in",
+      "email": "amit.sa@shyamautomotive.com",
       "role": "SERVICE_ADVISOR",
       "title": "Senior Service Advisor (EV & Luxury)",
       "avatar": "📋",
@@ -45,7 +52,7 @@
     {
       "id": "usr-03",
       "name": "Deepak Yadav",
-      "email": "deepak.tech@sanghitata.in",
+      "email": "deepak.tech@shyamautomotive.com",
       "role": "MASTER_TECHNICIAN",
       "title": "Master Diagnostic Tech (EV HV-Level 3 & DCA)",
       "avatar": "🔧",
@@ -59,7 +66,7 @@
     {
       "id": "usr-04",
       "name": "Priya Mandloi",
-      "email": "priya.cre@sanghitata.in",
+      "email": "priya.cre@shyamautomotive.com",
       "role": "CRE_SPECIALIST",
       "title": "Customer Relationship Lead (Telephony CRM)",
       "avatar": "🎧",
@@ -87,7 +94,7 @@
     {
       "id": "usr-06",
       "name": "Rakesh Verma",
-      "email": "rakesh.parts@sanghitata.in",
+      "email": "rakesh.parts@shyamautomotive.com",
       "role": "PARTS_MANAGER",
       "title": "Spare Parts & Inventory Head",
       "avatar": "📦",
@@ -97,6 +104,61 @@
         "DEAD_STOCK_TRADING",
         "BUFFER_FORECAST"
       ]
+    },
+    {
+      "id": "usr-07",
+      "name": "Sanjay Rathore",
+      "email": "sanjay.wm@shyamautomotive.com",
+      "role": "WORKS_MANAGER",
+      "title": "Works Manager / Workshop Floor Controller",
+      "avatar": "⚙️",
+      "permissions": [
+        "WORKSHOP_GRID",
+        "CSP_BALANCER",
+        "ROAD_TEST_GATE",
+        "BAY_YIELD"
+      ]
+    },
+    {
+      "id": "usr-08",
+      "name": "Vikas Chouhan",
+      "email": "vikas.warranty@shyamautomotive.com",
+      "role": "WARRANTY_OFFICER",
+      "title": "AI Warranty Claims Auditor",
+      "avatar": "📑",
+      "permissions": [
+        "AI_WARRANTY_AUDIT",
+        "ECU_FREEZE_FRAME",
+        "EDMS_BRIDGE",
+        "ZERO_REJECTION"
+      ]
+    },
+    {
+      "id": "usr-09",
+      "name": "Anjali Patidar",
+      "email": "anjali.billing@shyamautomotive.com",
+      "role": "BILLING_CASHIER",
+      "title": "Senior Billing & Accounts Executive",
+      "avatar": "💳",
+      "permissions": [
+        "GST_INVOICE_GENERATE",
+        "EMI_SETTLEMENT",
+        "GATE_PASS_RELEASE"
+      ]
+    },
+    {
+      "id": "usr-10",
+      "name": "Dr. Rajesh Singhal",
+      "email": "rajesh.singhal@indoremed.in",
+      "role": "CAR_OWNER",
+      "title": "Verified Car Owner (Harrier Dark Edition)",
+      "avatar": "🚗",
+      "permissions": [
+        "CUSTOMER_PORTAL",
+        "VIDEO_APPROVAL",
+        "UPI_PAYMENT",
+        "CSI_SURVEY"
+      ]
     }
   ],
   "whatsappConfig": {
@@ -104,8 +166,8 @@
     "phoneNumberId": "109348912831201",
     "metaApiToken": "EAAG...NATUREXPRESS_PROD_BEARER_TOKEN",
     "webhookVerifyToken": "naturexpress_tata_indore_secret_2026",
-    "verifiedNumber": "+91 98930 11223",
-    "displaySenderName": "Sanghi Tata Official Service",
+    "verifiedNumber": "+91 88798 97825",
+    "displaySenderName": "Shyam Automotive Tata Official Service",
     "deliveryRateMsgsPerSec": 80,
     "sentimentAlertThreshold": 0.7,
     "webhookUrl": "http://localhost:5000/api/webhook/whatsapp",
@@ -122,7 +184,7 @@
         "id": "log-2",
         "time": "11:32 AM",
         "type": "OUTBOUND_INTERACTIVE",
-        "recipient": "+91 98931 77220",
+        "recipient": "+91 88798 97825",
         "template": "video_approval_card",
         "status": "DELIVERED_READ"
       }
@@ -258,7 +320,7 @@
       "step": 1,
       "trigger": "Day 0 (Immediately on Handover)",
       "title": "Google 5-Star Review & Digital Invoice",
-      "content": "Thank you for visiting Sanghi Tata! Please share your 5-star rating on Google Reviews & download your GST Invoice: https://tata.sanghi.in/inv",
+      "content": "Thank you for visiting Shyam Tata! Please share your 5-star rating on Google Reviews & download your GST Invoice: https://tata.sanghi.in/inv",
       "responseRate": "42%"
     },
     {
@@ -299,8 +361,8 @@
   ],
   "mdMorningBriefing": {
     "briefingTime": "08:45 AM (Daily Automated Dispatch)",
-    "dealershipName": "Sanghi Brothers (Tata Motors Indore)",
-    "recipient": "Chetan Sanghi (Dealer Principal / MD - +91 98260 00001)",
+    "dealershipName": "Shyam Automotive Tata Motors (Scheme 140)",
+    "recipient": "Shyam Singhal (Dealer Principal / MD - +91 98260 00001)",
     "todayDate": "2026-10-06",
     "metrics": {
       "todayBookedAppointments": 38,
@@ -313,7 +375,7 @@
       "topCRECaller": "Priya Mandloi (35.3% Conversion)",
       "washingBayPredictedPeak": "04:15 PM (Sequencer Activated)"
     },
-    "sampleWhatsAppMessage": "🌅 *Good morning Chetan Sir!* Here is your Sanghi Tata Daily Workshop Briefing for 06 Oct:\n\n📋 *Today's Load:* 38 Appointments | 14 Open Bays\n💰 *Yesterday Labor Revenue:* ₹2,42,500 (114% of Target)\n⚠️ *Escalations:* 1 Case (Kunal Deshmukh CCM Intervening)\n📦 *Inter-Dealer Pool:* 2 child-parts en-route from Shyam Tata\n🏆 *Top SA:* Amit Sharma (₹48.2k EW sold)\n\nHave a high-velocity day! 🚀"
+    "sampleWhatsAppMessage": "🌅 *Good morning Chetan Sir!* Here is your Shyam Tata Daily Workshop Briefing for 06 Oct:\n\n📋 *Today's Load:* 38 Appointments | 14 Open Bays\n💰 *Yesterday Labor Revenue:* ₹2,42,500 (114% of Target)\n⚠️ *Escalations:* 1 Case (Kunal Deshmukh CCM Intervening)\n📦 *Inter-Dealer Pool:* 2 child-parts en-route from Shyam Tata\n🏆 *Top SA:* Amit Sharma (₹48.2k EW sold)\n\nHave a high-velocity day! 🚀"
   },
   "loyaltyAccounts": {
     "veh-001": {
@@ -499,7 +561,7 @@
       "occurrencesLast7Days": 6,
       "dealershipBreakdown": [
         {
-          "dealer": "Sanghi Brothers (Bypass)",
+          "dealer": "Shyam Automotive (Bypass)",
           "cases": 2
         },
         {
@@ -1034,10 +1096,10 @@
       {
         "id": "msg-101",
         "sender": "system",
-        "senderName": "Sanghi Tata Official Service",
+        "senderName": "Shyam Tata Official Service",
         "time": "09:16 AM",
         "type": "status_update",
-        "content": "🚗 *Namaste Rajesh ji!* Your Nexon EV (MP-09-EB-8899) has been safely checked in at *Sanghi Brothers Tata, Indore (Bypass)*. Service Advisor: *Amit Sharma* (+91 94250 88711). Live tracker: https://tata.sanghi.in/track/jc-8899"
+        "content": "🚗 *Namaste Rajesh ji!* Your Nexon EV (MP-09-EB-8899) has been safely checked in at *Shyam Automotive Tata, Indore (Bypass)*. Service Advisor: *Amit Sharma* (+91 94250 88711). Live tracker: https://tata.sanghi.in/track/jc-8899"
       },
       {
         "id": "msg-102",
@@ -1091,7 +1153,7 @@
       {
         "id": "msg-1791201611269",
         "sender": "system",
-        "senderName": "Sanghi Tata Official Service",
+        "senderName": "Shyam Tata Official Service",
         "time": "05:30 pm",
         "type": "status_update",
         "content": "🔧 *Update:* Approved mechanical repairs and genuine parts installation underway in Bay 5 (EV High-Voltage Lane)."
@@ -1099,7 +1161,7 @@
       {
         "id": "msg-1791201613313",
         "sender": "system",
-        "senderName": "Sanghi Tata Official Service",
+        "senderName": "Shyam Tata Official Service",
         "time": "05:30 pm",
         "type": "status_update",
         "content": "🚿 *Update:* Mechanical work complete! Your vehicle has moved to Washing Bay 1 for foam bath and interior vacuuming."
@@ -1109,7 +1171,7 @@
       {
         "id": "msg-201",
         "sender": "system",
-        "senderName": "Sanghi Tata Official Service",
+        "senderName": "Shyam Tata Official Service",
         "time": "09:41 AM",
         "type": "status_update",
         "content": "🚗 *Namaste Dr. Vikram Singhal ji!* Your Harrier Dark Edition (MP-09-CW-4020) is in Bay 2 for 40k Major Service. Service Advisor: *Preeti Patel*."
@@ -1170,6 +1232,22 @@
     }
   ],
   "creQueue": [
+    {
+      "id": "LEAD-TD-437243",
+      "customerName": "Aarav Singhal",
+      "customerPhone": "9826011111",
+      "vehicleModel": "Tata Curvv",
+      "regNumber": "NEW-INQUIRY",
+      "lastServiceDate": "N/A (Sales Lead)",
+      "estimatedCurrentKM": 0,
+      "dueDaysOverdue": 0,
+      "unapprovedItemsCount": 0,
+      "serviceType": "Test Drive Request - Tata Curvv",
+      "callPriority": "HIGH",
+      "callStatus": "PENDING_FIRST_DIAL",
+      "notes": "Test Drive requested for 2026-10-15 at Scheme 140 Flagship Hub",
+      "bestCallingTime": "Morning (10:00 AM - 1:00 PM)"
+    },
     {
       "id": "cre-01",
       "customerName": "Sanjay Agrawal",
@@ -1641,11 +1719,17 @@
       "stockLocations": [
         {
           "dealerId": "shyam-dewas-02",
-          "dealerName": "Shyam Automotive (Dewas Road)",
+          "dealerName": "Shyam Automotive (Dewas Road Depot)",
           "stockQty": 2,
           "distanceKm": 8.5,
           "etaMins": 45,
           "status": "Available for Instant Dispatch"
+        },
+        {
+          "dealerId": "shyam-scheme-140",
+          "dealerName": "Shyam Automotive (Scheme 140 Flagship)",
+          "stockQty": 0,
+          "status": "Out of Stock (Customer Waiting - jc-1102)"
         },
         {
           "dealerId": "jagdish-pithampur-03",
@@ -1654,12 +1738,6 @@
           "distanceKm": 22,
           "etaMins": 75,
           "status": "Available"
-        },
-        {
-          "dealerId": "sanghi-indore-01",
-          "dealerName": "Sanghi Brothers (Bypass)",
-          "stockQty": 0,
-          "status": "Out of Stock (Customer Waiting - jc-1102)"
         }
       ]
     },
@@ -1672,16 +1750,16 @@
       "price": 4200,
       "stockLocations": [
         {
-          "dealerId": "sanghi-indore-01",
-          "dealerName": "Sanghi Brothers (Bypass)",
+          "dealerId": "shyam-scheme-140",
+          "dealerName": "Shyam Automotive (Scheme 140 Flagship)",
           "stockQty": 3,
           "distanceKm": 0,
           "etaMins": 0,
-          "status": "In Local Store"
+          "status": "In Local Store (Scheme 140)"
         },
         {
           "dealerId": "shyam-dewas-02",
-          "dealerName": "Shyam Automotive (Dewas Road)",
+          "dealerName": "Shyam Automotive (Dewas Road Depot)",
           "stockQty": 1,
           "distanceKm": 8.5,
           "etaMins": 45,
@@ -1698,20 +1776,20 @@
       "price": 850,
       "stockLocations": [
         {
+          "dealerId": "shyam-scheme-140",
+          "dealerName": "Shyam Automotive (Scheme 140 Flagship)",
+          "stockQty": 2,
+          "distanceKm": 0,
+          "etaMins": 0,
+          "status": "In Local Store (Scheme 140)"
+        },
+        {
           "dealerId": "jagdish-pithampur-03",
           "dealerName": "Jagdish Motors (Pithampur)",
           "stockQty": 6,
           "distanceKm": 22,
           "etaMins": 60,
           "status": "Available for Intra-City Runner"
-        },
-        {
-          "dealerId": "sanghi-indore-01",
-          "dealerName": "Sanghi Brothers (Bypass)",
-          "stockQty": 1,
-          "distanceKm": 0,
-          "etaMins": 0,
-          "status": "In Local Store"
         }
       ]
     },
@@ -1725,11 +1803,19 @@
       "stockLocations": [
         {
           "dealerId": "shyam-dewas-02",
-          "dealerName": "Shyam Automotive (Ring Road)",
+          "dealerName": "Shyam Automotive (Dewas Road Depot)",
           "stockQty": 1,
-          "distanceKm": 12,
-          "etaMins": 50,
+          "distanceKm": 8.5,
+          "etaMins": 45,
           "status": "Available for Instant Dispatch"
+        },
+        {
+          "dealerId": "shyam-scheme-140",
+          "dealerName": "Shyam Automotive (Scheme 140 Flagship)",
+          "stockQty": 1,
+          "distanceKm": 0,
+          "etaMins": 0,
+          "status": "In Local Store (Scheme 140)"
         }
       ]
     }
@@ -1737,7 +1823,7 @@
   "deadStockPool": [
     {
       "id": "ds-01",
-      "holdingDealer": "Sanghi Brothers - Bypass",
+      "holdingDealer": "Shyam Automotive - Bypass",
       "partName": "Tata Hexa 4x4 Rear Differential Crown Wheel",
       "partNo": "2844-9911-00",
       "stuckDays": 320,
@@ -1756,7 +1842,7 @@
       "stuckDays": 280,
       "holdingValue": 24000,
       "discountedOffer": 15500,
-      "targetDealer": "Sanghi Brothers Indore",
+      "targetDealer": "Shyam Automotive Indore",
       "matchFound": "Matched with Indore Value Club Member IVC-2026-0881",
       "negotiationStatus": "OFFER_ACCEPTED",
       "counterOfferAmount": 15500
@@ -1963,82 +2049,71 @@
     }
   ],
   "dealershipGroup": {
-    "id": "grp-sanghi-indore",
-    "name": "Sanghi Automotive Retail Group",
-    "cluster": "Indore Region (MP West)",
-    "totalActiveBays": 60,
-    "totalTechnicians": 78,
-    "todayGroupThroughput": 168,
-    "groupRevenueToday": 2480000,
-    "groupRecoveredToday": 142500,
+    "id": "grp-shyam-indore",
+    "name": "Shyam Automotive Tata Retail Group",
+    "cluster": "Indore Region (MP-09)",
+    "totalActiveBays": 44,
+    "totalTechnicians": 54,
+    "todayGroupThroughput": 102,
+    "groupRevenueToday": 2640000,
+    "groupRecoveredToday": 168000,
     "branches": [
       {
-        "id": "sanghi-bypass",
-        "name": "Sanghi Brothers - Central Bypass (Flagship)",
-        "shortName": "Bypass Flagship",
-        "code": "SNG-IND-01",
-        "address": "Plot 14-B, A.B. Road, Bypass Junction, Indore 452010",
-        "phone": "+91 731 4055000",
-        "verifiedWhatsApp": "+91 98930 11223",
+        "id": "shyam-scheme-140",
+        "name": "Shyam Automotive - Scheme 140 (Flagship Hub)",
+        "shortName": "Scheme 140 Flagship",
+        "code": "SHY-IND-140",
+        "address": "Infront of Agarwal Public School, Gram, Khasra No.15/3/4, Scheme No 140 Main Road, Bicholi Mardana Rd, Indore 452016",
+        "phone": "+91 88798 97825",
+        "verifiedWhatsApp": "+91 88798 97825",
         "activeBays": 18,
-        "totalTechnicians": 24,
+        "totalTechnicians": 22,
         "throughputToday": 42,
-        "bayUtilization": 78,
-        "csiScore": 9.4,
+        "bayUtilization": 84,
+        "csiScore": 9.8,
+        "googleRating": 4.9,
+        "googleReviews": 1237,
         "isHQ": true,
-        "latitude": 22.7533,
-        "longitude": 75.8937
-      },
-      {
-        "id": "sanghi-manorama",
-        "name": "Sanghi Brothers - Manorama Ganj Service Station",
-        "shortName": "Manorama Ganj",
-        "code": "SNG-IND-02",
-        "address": "12/1, Manorama Ganj Main Road, Indore 452001",
-        "phone": "+91 731 4268000",
-        "verifiedWhatsApp": "+91 98930 22334",
-        "activeBays": 12,
-        "totalTechnicians": 16,
-        "throughputToday": 28,
-        "bayUtilization": 83,
-        "csiScore": 9.6,
-        "isHQ": false,
-        "latitude": 22.7196,
-        "longitude": 75.8824
+        "latitude": 22.7093,
+        "longitude": 75.9082
       },
       {
         "id": "shyam-dewas",
-        "name": "Shyam Automotive - Dewas Road Cluster Hub",
-        "shortName": "Shyam Dewas Rd",
-        "code": "SHY-IND-01",
+        "name": "Shyam Automotive - Dewas Naka Spares Depot",
+        "shortName": "Dewas Naka Spares",
+        "code": "SHY-IND-02",
         "address": "Dewas Naka Industrial Area, Sector B, Indore 452010",
         "phone": "+91 731 4982000",
         "verifiedWhatsApp": "+91 98260 77112",
         "activeBays": 14,
         "totalTechnicians": 18,
         "throughputToday": 34,
-        "bayUtilization": 71,
-        "csiScore": 9.1,
+        "bayUtilization": 75,
+        "csiScore": 9.5,
+        "googleRating": 4.8,
+        "googleReviews": 640,
         "isHQ": false,
         "latitude": 22.7821,
         "longitude": 75.9125
       },
       {
-        "id": "jagdish-pithampur",
-        "name": "Jagdish Motors - Pithampur Commercial Hub",
-        "shortName": "Jagdish Pithampur",
-        "code": "JAG-PTH-01",
-        "address": "Industrial Sector 3, Pithampur Auto Cluster, MP 454775",
-        "phone": "+91 7292 411000",
-        "verifiedWhatsApp": "+91 98270 99441",
-        "activeBays": 16,
-        "totalTechnicians": 20,
-        "throughputToday": 38,
-        "bayUtilization": 75,
-        "csiScore": 8.9,
+        "id": "shyam-rau",
+        "name": "Shyam Automotive - Rau Bypass Express Hub",
+        "shortName": "Rau Express Hub",
+        "code": "SHY-IND-03",
+        "address": "Rau Bypass Auto Cluster, AB Road, Indore 453331",
+        "phone": "+91 731 4983000",
+        "verifiedWhatsApp": "+91 98260 77113",
+        "activeBays": 12,
+        "totalTechnicians": 14,
+        "throughputToday": 26,
+        "bayUtilization": 72,
+        "csiScore": 9.6,
+        "googleRating": 4.8,
+        "googleReviews": 420,
         "isHQ": false,
-        "latitude": 22.6105,
-        "longitude": 75.6881
+        "latitude": 22.6321,
+        "longitude": 75.8012
       }
     ]
   },
@@ -2046,14 +2121,14 @@
     {
       "id": "evt-9901",
       "timestamp": "2026-10-06T08:30:15Z",
-      "branchId": "sanghi-bypass",
+      "branchId": "shyam-scheme-140",
       "userId": "usr-01",
-      "userName": "Chetan Sanghi",
+      "userName": "Shyam Singhal",
       "userRole": "DEALER_PRINCIPAL",
       "actionType": "SECURITY_SESSION_INITIALIZED",
       "entityType": "SYSTEM",
       "entityId": "SYS-AUTH",
-      "details": "Dealer Principal Chetan Sanghi authenticated session via biometrics + SSO.",
+      "details": "Dealer Principal Shyam Singhal authenticated session via biometrics + SSO.",
       "ipAddress": "192.168.1.10",
       "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
       "sha256Hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -2062,7 +2137,7 @@
     {
       "id": "evt-9902",
       "timestamp": "2026-10-06T09:15:20Z",
-      "branchId": "sanghi-bypass",
+      "branchId": "shyam-scheme-140",
       "userId": "usr-02",
       "userName": "Amit Sharma",
       "userRole": "SERVICE_ADVISOR",
@@ -2078,7 +2153,7 @@
     {
       "id": "evt-9903",
       "timestamp": "2026-10-06T10:22:40Z",
-      "branchId": "sanghi-bypass",
+      "branchId": "shyam-scheme-140",
       "userId": "usr-02",
       "userName": "Amit Sharma",
       "userRole": "SERVICE_ADVISOR",
@@ -2094,9 +2169,9 @@
     {
       "id": "evt-9904",
       "timestamp": "2026-10-06T11:36:12Z",
-      "branchId": "sanghi-bypass",
+      "branchId": "shyam-scheme-140",
       "userId": "usr-01",
-      "userName": "Chetan Sanghi",
+      "userName": "Shyam Singhal",
       "userRole": "DEALER_PRINCIPAL",
       "actionType": "EXTENDED_WARRANTY_ACTIVATION",
       "entityType": "PAYMENT_EMI",
@@ -2117,7 +2192,7 @@
       "actionType": "INTER_DEALER_RUNNER_DISPATCH",
       "entityType": "PARTS_SWARM",
       "entityId": "PART-DCA-2871",
-      "details": "Dispatched inter-dealer parts runner from Shyam Dewas Rd to Sanghi Bypass for Safari DCA Solenoid.",
+      "details": "Dispatched inter-dealer parts runner from Shyam Dewas Rd Depot to Shyam Scheme 140 Flagship for Safari DCA Solenoid.",
       "ipAddress": "192.168.2.15",
       "previousHash": "9b2e4f6a8c0d2e4f6a8c0d2e4f6a8c0d2e4f6a8c0d2e4f6a8c0d2e4f6a8c0d2e",
       "sha256Hash": "7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b",
@@ -2126,7 +2201,7 @@
     {
       "id": "evt-9906",
       "timestamp": "2026-10-06T12:40:18Z",
-      "branchId": "sanghi-bypass",
+      "branchId": "shyam-scheme-140",
       "userId": "usr-05",
       "userName": "Kunal Deshmukh",
       "userRole": "OEM_CCM",
@@ -2209,7 +2284,7 @@
           "progressPercent": 65,
           "startTime": "09:40",
           "promisedDeliveryTime": "18:00",
-          "onTimeDeliveryProbability": 96,
+          "onTimeDeliveryProbability": 100,
           "activeTask": "Front Brake Disc Skimming & Bush Replacement",
           "partsStatus": "PARTS_FITTED_IN_BAY"
         }
@@ -2282,7 +2357,7 @@
           "progressPercent": 45,
           "startTime": "09:15",
           "promisedDeliveryTime": "17:30",
-          "onTimeDeliveryProbability": 92,
+          "onTimeDeliveryProbability": 100,
           "activeTask": "BMS Firmware Flash & Coolant Loop Pressure Test",
           "partsStatus": "CABIN_FILTER_APPROVED_AWAITING_FITMENT"
         }
@@ -2327,7 +2402,7 @@
           "progressPercent": 80,
           "startTime": "10:00",
           "promisedDeliveryTime": "19:00",
-          "onTimeDeliveryProbability": 88,
+          "onTimeDeliveryProbability": 100,
           "activeTask": "Fitting Shyam Tata Procured Mechatronic Solenoid",
           "partsStatus": "RUNNER_DELIVERED_PARTS_IN_BAY"
         }

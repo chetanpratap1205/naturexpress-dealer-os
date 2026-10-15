@@ -11,17 +11,27 @@ import {
   Sparkles,
   ExternalLink,
   MessageSquareWarning,
-  Building2
+  Building2,
+  Zap,
+  ArrowRight
 } from 'lucide-react';
+import CCMAgentModal from './CCMAgentModal';
 
-export default function CCMRadar({ alerts, onIntervene }) {
+export default function CCMRadar({ alerts, onIntervene, onDataRefresh }) {
   const [interveningId, setInterveningId] = useState(null);
   const [interventionNote, setInterventionNote] = useState('');
+  const [showCCMAgentModal, setShowCCMAgentModal] = useState(false);
+  const [selectedAlertForModal, setSelectedAlertForModal] = useState(null);
 
   const handleAction = (alertId) => {
     onIntervene(alertId, interventionNote || "CCM called customer directly. Courtesy Nexon EV arranged from Indore central pool + part expedited from Dewas Road store.");
     setInterveningId(null);
     setInterventionNote('');
+  };
+
+  const handleOpenRescueDrawer = (alert) => {
+    setSelectedAlertForModal(alert);
+    setShowCCMAgentModal(true);
   };
 
   return (
@@ -52,12 +62,23 @@ export default function CCMRadar({ alerts, onIntervene }) {
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-xl p-3.5 text-right shrink-0 shadow-xs">
-            <span className="text-xs text-slate-500 font-medium block">Territory Escalation Risk</span>
-            <span className="text-2xl font-black text-amber-600 font-mono">1 Critical Alert</span>
-            <span className="text-[10px] text-emerald-700 font-bold block mt-0.5">
-              98.6% Public Rating Protected
-            </span>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <button
+              onClick={() => handleOpenRescueDrawer(alerts?.[0])}
+              className="px-4 py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-lg shadow-red-950/20 animate-pulse hover:animate-none"
+            >
+              <ShieldAlert className="w-4 h-4 text-white" />
+              <span>Launch Experience Sentinel</span>
+              <span className="text-[10px] bg-white/20 text-white px-1.5 py-0.5 rounded font-mono">100% NLP</span>
+            </button>
+
+            <div className="bg-white border border-slate-200 rounded-xl p-3 text-right shrink-0 shadow-xs">
+              <span className="text-xs text-slate-500 font-medium block">Territory Escalation Risk</span>
+              <span className="text-xl font-black text-amber-600 font-mono">1 Critical Alert</span>
+              <span className="text-[10px] text-emerald-700 font-bold block mt-0.5">
+                98.6% Public Rating Protected
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -119,13 +140,15 @@ export default function CCMRadar({ alerts, onIntervene }) {
                 </span>
 
                 {alert.status !== 'Resolved by CCM Intervention' && alert.status !== 'Intervened by CCM' && (
-                  <button
-                    onClick={() => setInterveningId(alert.id)}
-                    className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer flex items-center space-x-1.5"
-                  >
-                    <PhoneCall className="w-3.5 h-3.5" />
-                    <span>CCM One-Click Rescue</span>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleOpenRescueDrawer(alert)}
+                      className="px-4 py-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-black text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center space-x-1.5 animate-pulse hover:animate-none"
+                    >
+                      <ShieldAlert className="w-3.5 h-3.5" />
+                      <span>Launch Experience Sentinel</span>
+                    </button>
+                  </div>
                 )}
               </div>
             </div>
@@ -162,6 +185,17 @@ export default function CCMRadar({ alerts, onIntervene }) {
           </div>
         ))}
       </div>
+
+      {/* CCM Autonomous Experience Sentinel & Rescue Drawer Modal */}
+      <CCMAgentModal
+        isOpen={showCCMAgentModal}
+        onClose={() => {
+          setShowCCMAgentModal(false);
+          setSelectedAlertForModal(null);
+        }}
+        preselectedAlert={selectedAlertForModal}
+        onDataRefresh={onDataRefresh}
+      />
     </div>
   );
 }

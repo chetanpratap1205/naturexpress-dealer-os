@@ -4,16 +4,35 @@
   body {
     @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
+
+  /* Prevent iOS Safari auto-zoom on input focus while keeping desktop crisp */
+  input, textarea, select {
+    font-size: 16px;
+    -webkit-user-select: auto;
+    user-select: auto;
+  }
+  @media (min-width: 640px) {
+    input, textarea, select {
+      font-size: inherit;
+    }
+  }
+}
+
+/* Enable momentum inertia scrolling on iOS WebKit */
+* {
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Custom crisp modern scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
@@ -23,6 +42,29 @@
   background: #94a3b8;
 }
 
+/* Hide scrollbar for clean horizontal mobile swipes */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Safe area inset paddings for mobile navigation notch & bottom bar */
+.pb-safe {
+  padding-bottom: calc(env(safe-area-inset-bottom, 16px) + 72px);
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.pl-safe {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.pr-safe {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
 @keyframes pulse-subtle {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.88; transform: scale(1.01); }
@@ -30,4 +72,56 @@
 
 .animate-pulse-subtle {
   animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ========================================================================= */
+/* Physical Counter & Gate Pass Printing Styles (Dealership & Security Gate) */
+/* ========================================================================= */
+@media print {
+  header, 
+  nav, 
+  aside, 
+  footer, 
+  .print\:hidden,
+  button:not(.print\:inline-block),
+  [class*="FloatingSpecialistDock"],
+  [class*="SpecialistsHubModal"],
+  .fixed:not(.printable-fixed) {
+    display: none !important;
+  }
+
+  body, html, main {
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 11pt !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .printable-document {
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10mm !important;
+    page-break-after: avoid !important;
+  }
 }

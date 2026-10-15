@@ -1,0 +1,21 @@
+{
+  "short_name": "Shyam Auto",
+  "name": "Shyam Automotive - Tata Motors Dealership OS",
+  "id": "https://automotive.naturexpress.in/",
+  "start_url": "https://automotive.naturexpress.in/",
+  "scope": "https://automotive.naturexpress.in/",
+  "description": "Official Tata Motors 3S Dealership & Service App for Indore, Scheme 140, Bhawarkua, Kukshi & Badnawar",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "background_color": "#0f172a",
+  "theme_color": "#1d4ed8",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "categories": ["auto", "shopping", "utilities"]
+}

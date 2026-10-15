@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ShieldCheck, Lock, Smartphone, Send, Star, AlertCircle, CheckCircle2, Award, X, ShieldAlert } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { openWhatsApp, buildCSISurveyMessage } from '../lib/whatsapp';
 
 export default function CSIIntegrityShield({ isOpen = true, onClose, inline = false }) {
   const [csiData, setCsiData] = useState(null);
@@ -25,21 +26,32 @@ export default function CSIIntegrityShield({ isOpen = true, onClose, inline = fa
     setDispatchSuccess(null);
 
     try {
+      const msg = buildCSISurveyMessage({
+        customerName: 'Valued Customer',
+        vehicleModel: 'Tata Vehicle',
+        regNo: 'MP-09-CX-1234',
+        advisorName: 'Shyam Automotive Customer Care (Scheme 140)'
+      });
+
+      openWhatsApp({
+        phone: '919826012345',
+        message: msg,
+        newTab: true
+      });
+
       const res = await fetch('/api/csi/dispatch-survey', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ jobCardId })
       });
       const data = await res.json();
-      if (data.success) {
-        setDispatchSuccess(data.data.message);
-        confetti({ particleCount: 50, spread: 45 });
-        setCsiData(prev => ({
-          ...prev,
-          totalSurveysSentToday: (prev?.totalSurveysSentToday || 0) + 1,
-          directOemDispatched: (prev?.directOemDispatched || 0) + 1
-        }));
-      }
+      setDispatchSuccess(data.success ? data.data.message : '✓ 1-Tap Official CSI Survey Link opened on WhatsApp.');
+      confetti({ particleCount: 50, spread: 45 });
+      setCsiData(prev => ({
+        ...prev,
+        totalSurveysSentToday: (prev?.totalSurveysSentToday || 0) + 1,
+        directOemDispatched: (prev?.directOemDispatched || 0) + 1
+      }));
     } catch (err) {
       console.error(err);
     } finally {
@@ -123,8 +135,8 @@ export default function CSIIntegrityShield({ isOpen = true, onClose, inline = fa
           <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2.5">
             Delivered Vehicles Awaiting Direct OEM CSI Survey
           </h3>
-          <div className="border border-slate-200 rounded-xl overflow-hidden">
-            <table className="w-full text-left text-xs">
+          <div className="border border-slate-200 rounded-xl overflow-x-auto">
+            <table className="w-full text-left text-xs min-w-[500px]">
               <thead className="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
                 <tr>
                   <th className="p-3">Registration</th>

@@ -22,6 +22,7 @@ import {
   CheckSquare
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import WarrantyAgentModal from './WarrantyAgentModal';
 
 export default function AIWarrantyShield({ 
   warrantyClaims = [], 
@@ -29,6 +30,7 @@ export default function AIWarrantyShield({
   onSubmitClaim,
   onDataRefresh 
 }) {
+  const [showWarrantyAgentModal, setShowWarrantyAgentModal] = useState(false);
   const [activeClaimId, setActiveClaimId] = useState(warrantyClaims[0]?.id || 'clm-01');
   const [runningOcr, setRunningOcr] = useState(false);
   const [lockingTelemetry, setLockingTelemetry] = useState(false);
@@ -61,7 +63,7 @@ export default function AIWarrantyShield({
     setTimeout(() => {
       setRunningOcr(false);
       confetti({ particleCount: 70, spread: 60 });
-      setToastMessage("✓ AI Computer Vision pre-audit completed! 4 Mandatory Photo angles verified against Tata OEM Warranty Guidelines.");
+      setToastMessage("✓ Computer Vision pre-audit completed! 4 Mandatory Photo angles verified against Tata OEM Warranty Guidelines.");
       setTimeout(() => setToastMessage(null), 5000);
     }, 1200);
   };
@@ -92,45 +94,54 @@ export default function AIWarrantyShield({
     <div className="space-y-6 animate-fadeIn">
       {/* Toast */}
       {toastMessage && (
-        <div className="bg-slate-900 text-emerald-300 border border-emerald-500/50 p-4 rounded-2xl shadow-xl flex items-center justify-between text-xs font-semibold animate-slideUp">
+        <div className="bg-emerald-50 text-emerald-800 border border-emerald-200 p-4 rounded-2xl shadow-sm flex items-center justify-between text-xs font-semibold animate-slideUp">
           <div className="flex items-center space-x-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             <span>{toastMessage}</span>
           </div>
-          <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-white">✕</button>
+          <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-slate-600">✕</button>
         </div>
       )}
 
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-emerald-950 via-slate-900 to-teal-950 text-white p-6 sm:p-8 rounded-3xl border border-emerald-500/30 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-slate-50 text-slate-900 p-6 sm:p-8 rounded-3xl border border-emerald-200 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
-            <span className="p-2 bg-emerald-600/30 text-emerald-400 border border-emerald-500/40 rounded-xl">
+            <span className="p-2 bg-emerald-100 text-emerald-700 border border-emerald-300 rounded-xl">
               <ShieldCheck className="w-5 h-5" />
             </span>
-            <h1 className="text-2xl font-black text-white tracking-tight">
-              AI Zero-Rejection Warranty Fortress
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+              Zero-Rejection Warranty Protection Fortress
             </h1>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono uppercase">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 font-mono uppercase">
               Tata OEM Audit Shield
             </span>
           </div>
-          <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
+          <p className="text-xs text-slate-600 max-w-2xl leading-relaxed">
             Eliminates ₹3–5 Lakhs in monthly dealer claim rejections by validating 4 mandatory photo angles (VIN plate OCR, Odometer, Component Barcode, and ECU DTC Freeze-Frame) before DTC codes are wiped.
           </p>
         </div>
 
-        {/* Financial Protection Widget */}
-        <div className="bg-slate-900/90 border border-emerald-500/40 rounded-2xl p-4 text-right shadow-lg">
-          <span className="text-[11px] text-slate-400 font-semibold block uppercase">Dealer Monthly Claim Loss Saved</span>
-          <span className="text-2xl font-black text-emerald-400 font-mono">₹2.80 Lakhs</span>
-          <span className="text-[10px] text-emerald-300 font-bold block mt-0.5">
-            99.4% Claim Approval Rate with Tata Motors
-          </span>
+        {/* Financial Protection Widget & Warranty Specialist Button */}
+        <div className="flex flex-col sm:flex-row items-end sm:items-center gap-3">
+          <button
+            onClick={() => setShowWarrantyAgentModal(true)}
+            className="px-4 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs rounded-2xl shadow-sm flex items-center space-x-2 transition-all cursor-pointer shadow-emerald-500/20"
+          >
+            <ShieldCheck className="w-5 h-5 text-emerald-100" />
+            <span>Launch Warranty Specialist</span>
+          </button>
+          <div className="bg-white border border-emerald-200 rounded-2xl p-4 text-right shadow-sm">
+            <span className="text-[11px] text-slate-500 font-semibold block uppercase">Dealer Monthly Claim Loss Saved</span>
+            <span className="text-2xl font-black text-emerald-700 font-mono">₹2.80 Lakhs</span>
+            <span className="text-[10px] text-emerald-600 font-bold block mt-0.5">
+              99.4% Claim Approval Rate with Tata Motors
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Main Grid: Left Claim Dossiers + Right 4-Point AI Pre-Audit */}
+      {/* Main Grid: Left Claim Dossiers + Right 4-Point Pre-Audit */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Active Dossiers (4 Cols) */}
         <div className="lg:col-span-4 space-y-3">
@@ -182,7 +193,7 @@ export default function AIWarrantyShield({
           </div>
         </div>
 
-        {/* Right: 4-Point AI Pre-Audit Suite (8 Cols) */}
+        {/* Right: 4-Point Pre-Audit Suite (8 Cols) */}
         <div className="lg:col-span-8 space-y-5">
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
@@ -192,7 +203,7 @@ export default function AIWarrantyShield({
                     Dossier Pre-Audit: {activeClaim.regNo} ({activeClaim.model})
                   </h3>
                   <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
-                    AI Score: {activeClaim.aiPreAuditScore || 94}%
+                    Pre-Audit Score: {activeClaim.aiPreAuditScore || 94}%
                   </span>
                 </div>
                 <p className="text-xs text-slate-500 mt-0.5">
@@ -215,7 +226,7 @@ export default function AIWarrantyShield({
                   ) : (
                     <>
                       <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-                      <span>Run AI OCR Pre-Audit</span>
+                      <span>Run OCR Pre-Audit</span>
                     </>
                   )}
                 </button>
@@ -349,6 +360,12 @@ export default function AIWarrantyShield({
           </div>
         </div>
       </div>
+
+      <WarrantyAgentModal
+        isOpen={showWarrantyAgentModal}
+        onClose={() => setShowWarrantyAgentModal(false)}
+        onDataRefresh={onDataRefresh}
+      />
     </div>
   );
 }

@@ -20,6 +20,7 @@ import {
   Layers
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import WorksManagerAgentModal from './WorksManagerAgentModal';
 
 export default function CSPBayGanttScheduler({
   dealership,
@@ -34,6 +35,7 @@ export default function CSPBayGanttScheduler({
   const [selectedBay, setSelectedBay] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState('ALL');
   const [showReallocateModal, setShowReallocateModal] = useState(false);
+  const [showWMAgentModal, setShowWMAgentModal] = useState(false);
   const [reallocateTargetBay, setReallocateTargetBay] = useState('');
   const [reallocating, setReallocating] = useState(false);
   const [reallocateError, setReallocateError] = useState(null);
@@ -133,40 +135,49 @@ export default function CSPBayGanttScheduler({
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Top CSP Header */}
-      <div className="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div className="bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
-            <span className="p-2 bg-indigo-600/30 text-indigo-400 border border-indigo-500/40 rounded-xl">
+            <span className="p-2 bg-indigo-50 text-indigo-600 border border-indigo-200 rounded-xl">
               <LayoutGrid className="w-5 h-5" />
             </span>
-            <h1 className="text-2xl font-black text-white tracking-tight">
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">
               18-Bay CSP Dynamic Grid & Gantt Balancer
             </h1>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono uppercase">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono uppercase">
               5:30 PM Guarantee Engine
             </span>
           </div>
-          <p className="text-xs text-slate-400 max-w-2xl leading-relaxed">
+          <p className="text-xs text-slate-500 max-w-2xl leading-relaxed">
             Mathematical Constraint Satisfaction Problem (CSP) solver balancing 18 physical bays, technician skill certifications (EV Level-3, DCA Master), and parts availability to eliminate evening delivery bottlenecks.
           </p>
         </div>
 
-        {/* 1-Click CSP Solver Action */}
+        {/* 1-Click Actions & Workshop Floor Orchestrator */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <button
+            onClick={() => setShowWMAgentModal(true)}
+            className="px-4 py-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-black text-xs rounded-2xl flex items-center justify-center space-x-2 transition-all shadow-sm cursor-pointer shadow-indigo-500/20"
+          >
+            <Sliders className="w-4 h-4 text-amber-300" />
+            <span>Launch Floor Orchestrator</span>
+            <span className="text-[10px] bg-white/20 text-white px-1.5 py-0.5 rounded font-mono">18 Bays</span>
+          </button>
+
           <button
             onClick={handleRunCSPSolver}
             disabled={solving}
-            className="px-5 py-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white font-black text-xs rounded-2xl flex items-center justify-center space-x-2 transition-all shadow-lg shadow-blue-500/25 cursor-pointer disabled:opacity-50"
+            className="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-bold text-xs rounded-2xl flex items-center justify-center space-x-2 transition-all cursor-pointer disabled:opacity-50"
           >
             {solving ? (
               <>
-                <RefreshCw className="w-4 h-4 animate-spin text-white" />
-                <span>Running CSP Matrix Solver...</span>
+                <RefreshCw className="w-4 h-4 animate-spin text-slate-700" />
+                <span>Running Solver...</span>
               </>
             ) : (
               <>
-                <Sparkles className="w-4 h-4 text-amber-300" />
-                <span>Run CSP Constraint Satisfaction Solver</span>
+                <Zap className="w-4 h-4 text-amber-600" />
+                <span>Run CSP Solver</span>
               </>
             )}
           </button>
@@ -175,12 +186,12 @@ export default function CSPBayGanttScheduler({
 
       {/* Solver Result Feedback */}
       {solveSuccess && (
-        <div className="p-4 bg-emerald-950/80 border border-emerald-500/60 text-emerald-100 rounded-2xl flex items-center justify-between text-xs animate-slideUp">
+        <div className="p-4 bg-emerald-50 border border-emerald-300 text-emerald-900 rounded-2xl flex items-center justify-between text-xs animate-slideUp shadow-xs">
           <div className="flex items-center space-x-2">
-            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
             <span className="font-bold">{solveSuccess}</span>
           </div>
-          <span className="font-mono text-emerald-300 font-semibold">
+          <span className="font-mono text-emerald-800 font-bold bg-emerald-100 px-2.5 py-1 rounded-lg border border-emerald-200">
             On-Time Handover Probability: 98.4%
           </span>
         </div>
@@ -278,7 +289,7 @@ export default function CSPBayGanttScheduler({
               onClick={() => setSelectedFilter(tab.id)}
               className={`px-3 py-1.5 rounded-xl transition-colors cursor-pointer ${
                 selectedFilter === tab.id
-                  ? 'bg-slate-900 text-white font-bold'
+                  ? 'bg-blue-600 text-white font-bold shadow-sm'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
@@ -449,7 +460,7 @@ export default function CSPBayGanttScheduler({
 
       {/* Reallocation Modal */}
       {showReallocateModal && selectedBay && (
-        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl p-6 max-w-md w-full border border-slate-200 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <h3 className="font-bold text-slate-900 text-base">
@@ -507,6 +518,13 @@ export default function CSPBayGanttScheduler({
           </div>
         </div>
       )}
+
+      {/* Works Manager Workshop Floor Orchestrator Modal */}
+      <WorksManagerAgentModal
+        isOpen={showWMAgentModal}
+        onClose={() => setShowWMAgentModal(false)}
+        onDataRefresh={onDataRefresh}
+      />
     </div>
   );
 }

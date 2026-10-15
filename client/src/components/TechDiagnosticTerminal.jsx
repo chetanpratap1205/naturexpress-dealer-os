@@ -25,8 +25,9 @@ import {
   FileCheck
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import TechAgentModal from './TechAgentModal';
 
-export default function TechDiagnosticTerminal() {
+export default function TechDiagnosticTerminal({ onDataRefresh }) {
   const [selectedDtc, setSelectedDtc] = useState('P0841');
   const [vciConnected, setVciConnected] = useState(true);
   const [isLiveListening, setIsLiveListening] = useState(false);
@@ -35,6 +36,7 @@ export default function TechDiagnosticTerminal() {
   const [spectrogramBars, setSpectrogramBars] = useState([15, 30, 65, 88, 140, 290, 180, 95, 45, 20]);
   const [watermarkedVideoGenerated, setWatermarkedVideoGenerated] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [showTechAgentModal, setShowTechAgentModal] = useState(false);
 
   const canvasRef = useRef(null);
   const animationFrameRef = useRef(null);
@@ -170,7 +172,7 @@ export default function TechDiagnosticTerminal() {
       setIsLiveListening(false);
       setAcousticResult(currentAcoustic);
       confetti({ particleCount: 60, spread: 55 });
-      setToastMessage(`✓ Aarohan Acoustic AI Classified: ${currentAcoustic.title} (${currentAcoustic.confidence} confidence)`);
+      setToastMessage(`✓ Aarohan Acoustic Analysis Classified: ${currentAcoustic.title} (${currentAcoustic.confidence} confidence)`);
       setTimeout(() => setToastMessage(null), 5000);
     }, 2500);
   };
@@ -186,46 +188,57 @@ export default function TechDiagnosticTerminal() {
     <div className="space-y-6 animate-fadeIn">
       {/* Toast */}
       {toastMessage && (
-        <div className="bg-slate-900 text-emerald-300 border border-emerald-500/50 p-4 rounded-2xl shadow-xl flex items-center justify-between text-xs font-semibold animate-slideUp">
+        <div className="bg-emerald-50 text-emerald-800 border border-emerald-200 p-4 rounded-2xl shadow-sm flex items-center justify-between text-xs font-semibold animate-slideUp">
           <div className="flex items-center space-x-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             <span>{toastMessage}</span>
           </div>
-          <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-white">✕</button>
+          <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-slate-600">✕</button>
         </div>
       )}
 
       {/* Top Header */}
-      <div className="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div className="bg-white text-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
-            <span className="p-2 bg-indigo-600/30 text-indigo-400 border border-indigo-500/40 rounded-xl">
+            <span className="p-2 bg-indigo-50 text-indigo-600 border border-indigo-200 rounded-xl">
               <Wrench className="w-5 h-5" />
             </span>
-            <h1 className="text-2xl font-black text-white tracking-tight">
-              Aarohan Diagnostic Terminal & Acoustic AI
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+              Aarohan Diagnostic Terminal & Acoustic Analysis
             </h1>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40 font-mono uppercase">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-mono uppercase">
               Hindi Vernacular + FFT
             </span>
           </div>
-          <p className="text-xs text-slate-400 max-w-2xl leading-relaxed">
+          <p className="text-xs text-slate-500 max-w-2xl leading-relaxed">
             Direct technician terminal translating complex CAN-bus DTC pinout diagnostics into step-by-step Hindi workflows, paired with real-time Web Audio FFT acoustic noise classification.
           </p>
         </div>
 
-        {/* VCI Connection Pill */}
-        <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center space-x-3 shadow-inner">
-          <div className="p-2.5 bg-emerald-600/20 text-emerald-400 rounded-xl border border-emerald-500/30">
-            <Bluetooth className="w-5 h-5 animate-pulse" />
-          </div>
-          <div>
-            <div className="text-xs font-bold text-white flex items-center gap-1.5">
-              <span>Tata VCI Wireless Adapter</span>
-              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+        {/* Actions & VCI Connection Pill */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <button
+            onClick={() => setShowTechAgentModal(true)}
+            className="px-4 py-2.5 rounded-2xl text-xs font-black bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-teal-500 text-white flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-sm shadow-emerald-500/20"
+          >
+            <Cpu className="w-4 h-4 text-amber-300" />
+            <span>Launch Diagnostic Specialist</span>
+            <span className="text-[10px] bg-white/20 text-white px-1.5 py-0.5 rounded font-mono">Hindi FFT</span>
+          </button>
+
+          <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 flex items-center space-x-3 shadow-inner">
+            <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-200">
+              <Bluetooth className="w-4 h-4 animate-pulse" />
             </div>
-            <div className="text-[11px] text-slate-400 font-mono mt-0.5">
-              OBD-II CAN-FD • 500 kbps Active
+            <div>
+              <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                <span>Tata VCI Adapter</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+              </div>
+              <div className="text-[10px] text-slate-500 font-mono mt-0.5">
+                CAN-FD • 500 kbps
+              </div>
             </div>
           </div>
         </div>
@@ -348,7 +361,7 @@ export default function TechDiagnosticTerminal() {
                     }}
                     className={`p-2 rounded-xl text-left border transition-all cursor-pointer ${
                       selectedProfile === prof.id
-                        ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
                         : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                     }`}
                   >
@@ -360,13 +373,13 @@ export default function TechDiagnosticTerminal() {
             </div>
 
             {/* Live FFT Spectrogram Visualizer */}
-            <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4 shadow-inner">
-              <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
+            <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4 shadow-inner">
+              <div className="flex items-center justify-between text-xs text-slate-600 font-mono">
                 <span className="flex items-center gap-1.5">
-                  <Volume2 className="w-4 h-4 text-emerald-400" />
+                  <Volume2 className="w-4 h-4 text-emerald-600" />
                   Live Frequency Response (Hz)
                 </span>
-                <span className="text-emerald-400">
+                <span className="text-emerald-600 font-bold">
                   {isLiveListening ? '● RECORDING ACOUSTIC STREAM' : 'READY TO ANALYZE'}
                 </span>
               </div>
@@ -448,6 +461,14 @@ export default function TechDiagnosticTerminal() {
           </div>
         </div>
       </div>
+
+      {/* Floor Tech Diagnostic Specialist Modal */}
+      <TechAgentModal
+        isOpen={showTechAgentModal}
+        onClose={() => setShowTechAgentModal(false)}
+        technicianName="Ramesh Sonawane"
+        onDataRefresh={onDataRefresh}
+      />
     </div>
   );
 }

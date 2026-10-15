@@ -13,8 +13,9 @@ import {
   Zap
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import ServiceAdvisorAgentModal from './ServiceAdvisorAgentModal';
 
-export default function ServiceAdvisorPortal({ jobCards, dealership, onJobCardCreated }) {
+export default function ServiceAdvisorPortal({ jobCards, dealership, onJobCardCreated, onDataRefresh }) {
   const [regNo, setRegNo] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
@@ -24,6 +25,7 @@ export default function ServiceAdvisorPortal({ jobCards, dealership, onJobCardCr
   const [voiceRecording, setVoiceRecording] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [successCard, setSuccessCard] = useState(null);
+  const [showSAAgentModal, setShowSAAgentModal] = useState(false);
 
   const handleVoiceInput = () => {
     setVoiceRecording(true);
@@ -94,12 +96,23 @@ export default function ServiceAdvisorPortal({ jobCards, dealership, onJobCardCr
           </p>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-xl p-3.5 text-right shrink-0 shadow-xs">
-          <span className="text-xs text-slate-500 font-medium block">SA Daily Check-In Velocity</span>
-          <span className="text-2xl font-black text-blue-700 font-mono">14 Today</span>
-          <span className="text-[10px] text-emerald-700 font-bold block mt-0.5">
-            Avg Intake: 58 Seconds
-          </span>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <button
+            onClick={() => setShowSAAgentModal(true)}
+            className="px-4 py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-md shadow-blue-500/20"
+          >
+            <UserCheck className="w-4 h-4 text-cyan-200" />
+            <span>Launch Intake Specialist</span>
+            <span className="text-[10px] bg-white/20 text-white px-1.5 py-0.5 rounded font-mono">FRT Master</span>
+          </button>
+
+          <div className="bg-white border border-slate-200 rounded-xl p-3 text-right shrink-0 shadow-xs">
+            <span className="text-xs text-slate-500 font-medium block">SA Daily Velocity</span>
+            <span className="text-xl font-black text-blue-700 font-mono">14 Today</span>
+            <span className="text-[10px] text-emerald-700 font-bold block mt-0.5">
+              Avg: 58 Seconds
+            </span>
+          </div>
         </div>
       </div>
 
@@ -120,7 +133,7 @@ export default function ServiceAdvisorPortal({ jobCards, dealership, onJobCardCr
               }`}
             >
               <Mic className="w-3.5 h-3.5" />
-              <span>{voiceRecording ? "Listening to Hindi audio..." : "Voice Auto-Fill (AI)"}</span>
+              <span>{voiceRecording ? "Listening to Hindi audio..." : "Voice Auto-Fill"}</span>
             </button>
           </div>
 
@@ -258,6 +271,14 @@ export default function ServiceAdvisorPortal({ jobCards, dealership, onJobCardCr
           </div>
         </div>
       </div>
+
+      {/* Service Advisor Rapid Intake Specialist Modal */}
+      <ServiceAdvisorAgentModal
+        isOpen={showSAAgentModal}
+        onClose={() => setShowSAAgentModal(false)}
+        advisorName="Rahul Sharma"
+        onDataRefresh={onDataRefresh}
+      />
     </div>
   );
 }

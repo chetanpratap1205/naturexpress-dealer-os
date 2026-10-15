@@ -23,13 +23,15 @@ import confetti from 'canvas-confetti';
 import PartsBinScannerModal from './PartsBinScannerModal';
 import EDmsBridgeConsole from './EDmsBridgeConsole';
 import OEMBatchDefectRadar from './OEMBatchDefectRadar';
+import PartsStoreAgentModal from './PartsStoreAgentModal';
 
 export default function InterDealerPartsSwarm({ 
   partsPool, 
   deadStock, 
   territoryStats, 
   onDispatchRunner, 
-  onLiquidateDeadStock 
+  onLiquidateDeadStock,
+  onDataRefresh
 }) {
   const [selectedPart, setSelectedPart] = useState(partsPool?.[0]);
   const [activeTab, setActiveTab] = useState('pool'); // 'pool', 'deadstock', or 'buffer'
@@ -37,6 +39,7 @@ export default function InterDealerPartsSwarm({
   const [showBinScanner, setShowBinScanner] = useState(false);
   const [showEDmsBridge, setShowEDmsBridge] = useState(false);
   const [showBatchRadar, setShowBatchRadar] = useState(false);
+  const [showPartsStoreAgentModal, setShowPartsStoreAgentModal] = useState(false);
   const [bufferForecast, setBufferForecast] = useState(null);
 
   useEffect(() => {
@@ -74,7 +77,7 @@ export default function InterDealerPartsSwarm({
       });
       const data = await res.json();
       if (data.success) {
-        alert(`✓ Counter-Offer of ₹${offerAmt.toLocaleString()} submitted to Sanghi Brothers Bypass.`);
+        alert(`✓ Counter-Offer of ₹${offerAmt.toLocaleString()} submitted to Shyam Automotive Scheme 140.`);
       }
     } catch (err) {
       console.error(err);
@@ -104,12 +107,19 @@ export default function InterDealerPartsSwarm({
                 Indore Virtual Parts Exchange & Dead-Stock Liquidator
               </h1>
               <p className="text-xs text-slate-600 mt-1 max-w-2xl">
-                Unifies inventory across Sanghi Brothers, Shyam Automotive, Jagdish Motors, and TASS satellite centers. Reduces 7-day plant backorder wait times to under 60 minutes.
+                Unifies inventory across Shyam Automotive (Scheme 140 HQ & Dewas Depot), Sanghi Brothers, Jagdish Motors, and TASS satellite centers. Reduces 7-day plant backorder wait times to under 60 minutes.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={() => setShowPartsStoreAgentModal(true)}
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer shadow-cyan-500/20"
+            >
+              <Package className="w-4 h-4" />
+              <span>Launch Parts Logistics Desk</span>
+            </button>
             <button
               onClick={() => setShowBinScanner(true)}
               className="flex items-center gap-1.5 px-3 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all cursor-pointer"
@@ -133,33 +143,33 @@ export default function InterDealerPartsSwarm({
       </div>
 
       {/* Navigation Sub-Tabs */}
-      <div className="flex space-x-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 max-w-xl">
+      <div className="flex space-x-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 max-w-xl overflow-x-auto scrollbar-none">
         <button
           onClick={() => setActiveTab('pool')}
-          className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-1.5 ${
+          className={`flex-1 min-w-[140px] shrink-0 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-1.5 ${
             activeTab === 'pool' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
           }`}
         >
           <Network className="w-4 h-4" />
-          <span>Indore Virtual Parts Pool</span>
+          <span>Indore Virtual Pool</span>
         </button>
         <button
           onClick={() => setActiveTab('deadstock')}
-          className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-1.5 ${
+          className={`flex-1 min-w-[140px] shrink-0 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-1.5 ${
             activeTab === 'deadstock' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
           }`}
         >
           <RotateCw className="w-4 h-4" />
-          <span>Dead-Stock B2B Trading</span>
+          <span>Dead-Stock Trading</span>
         </button>
         <button
           onClick={() => setActiveTab('buffer')}
-          className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-1.5 ${
+          className={`flex-1 min-w-[140px] shrink-0 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-1.5 ${
             activeTab === 'buffer' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
           }`}
         >
           <TrendingUp className="w-4 h-4" />
-          <span>Morning Parts Buffer</span>
+          <span>Morning Buffer</span>
         </button>
       </div>
 
@@ -272,7 +282,7 @@ export default function InterDealerPartsSwarm({
 
                       {loc.stockQty > 0 && loc.distanceKm > 0 && (
                         <button
-                          onClick={() => handleRunner(selectedPart.id, loc.dealerName, 'Sanghi Brothers (Bypass)', 'jc-1102')}
+                          onClick={() => handleRunner(selectedPart.id, loc.dealerName, 'Shyam Automotive (Scheme 140)', 'jc-1102')}
                           className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all cursor-pointer flex items-center space-x-1.5 shrink-0"
                         >
                           <Truck className="w-4 h-4" />
@@ -402,6 +412,12 @@ export default function InterDealerPartsSwarm({
       <OEMBatchDefectRadar
         isOpen={showBatchRadar}
         onClose={() => setShowBatchRadar(false)}
+      />
+
+      <PartsStoreAgentModal
+        isOpen={showPartsStoreAgentModal}
+        onClose={() => setShowPartsStoreAgentModal(false)}
+        onDataRefresh={onDataRefresh}
       />
     </div>
   );

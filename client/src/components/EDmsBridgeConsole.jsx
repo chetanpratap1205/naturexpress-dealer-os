@@ -143,28 +143,28 @@ export default function EDmsBridgeConsole({ isOpen = true, onClose, inline = fal
     <div className={`bg-white border border-slate-200 w-full ${inline ? 'rounded-3xl shadow-sm' : 'max-w-4xl rounded-3xl shadow-2xl my-8'} overflow-hidden`}>
       {/* Toast */}
       {toastMessage && (
-        <div className="bg-slate-900 text-white px-4 py-2.5 text-xs font-semibold flex items-center justify-between border-b border-slate-800 animate-fadeIn">
+        <div className="bg-emerald-50 text-emerald-800 px-4 py-2.5 text-xs font-semibold flex items-center justify-between border-b border-emerald-200 animate-fadeIn">
           <span>{toastMessage}</span>
-          <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-white">✕</button>
+          <button onClick={() => setToastMessage(null)} className="text-slate-400 hover:text-slate-600">✕</button>
         </div>
       )}
 
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200 bg-slate-900 text-white">
+      <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200 bg-white text-slate-900">
         <div className="flex items-center gap-3">
           <div className="p-2.5 bg-blue-600 text-white rounded-xl shadow-md shadow-blue-500/30">
             <Server className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <h2 className="font-bold text-white text-base tracking-tight">
+              <h2 className="font-bold text-slate-900 text-base tracking-tight">
                 Tata e-DMS (Oracle Siebel 8.1 / SAP) SOAP Bridge
               </h2>
-              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/40 font-mono font-bold">
+              <span className="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-200 font-mono font-bold">
                 Zero-Crash Protocol
               </span>
             </div>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               Offline-resilient asynchronous XML bridge buffering floor job cards and parts requisitions during morning DMS traffic spikes.
             </p>
           </div>
@@ -173,7 +173,7 @@ export default function EDmsBridgeConsole({ isOpen = true, onClose, inline = fal
         {!inline && onClose && (
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
+            className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -279,25 +279,25 @@ export default function EDmsBridgeConsole({ isOpen = true, onClose, inline = fal
         </div>
 
         {/* Raw SOAP Packet Inspector Console */}
-        <div className="bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden shadow-inner">
-          <div className="px-4 py-3 border-b border-slate-800 flex items-center justify-between bg-slate-900/60">
+        <div className="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-inner">
+          <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between bg-slate-100">
             <div className="flex items-center space-x-2">
-              <Code className="w-4 h-4 text-emerald-400" />
-              <span className="text-xs font-bold text-white font-mono">
+              <Code className="w-4 h-4 text-emerald-600" />
+              <span className="text-xs font-bold text-slate-800 font-mono">
                 Siebel SOAP XML Inspector
               </span>
-              <span className="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono">
+              <span className="text-[10px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-mono">
                 Doc: SR-IND-2026-9921
               </span>
             </div>
 
-            <div className="flex items-center space-x-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-[11px] font-mono font-bold">
+            <div className="flex items-center space-x-1 bg-white p-1 rounded-lg border border-slate-200 text-[11px] font-mono font-bold">
               <button
                 onClick={() => setActivePacketTab('REQUEST')}
                 className={`px-2.5 py-1 rounded transition-colors cursor-pointer ${
                   activePacketTab === 'REQUEST'
                     ? 'bg-blue-600 text-white'
-                    : 'text-slate-400 hover:text-slate-200'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 SOAP Request (XML)
@@ -307,7 +307,7 @@ export default function EDmsBridgeConsole({ isOpen = true, onClose, inline = fal
                 className={`px-2.5 py-1 rounded transition-colors cursor-pointer ${
                   activePacketTab === 'RESPONSE'
                     ? 'bg-emerald-600 text-white'
-                    : 'text-slate-400 hover:text-slate-200'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 SOAP Response (ACK 200)
@@ -315,8 +315,8 @@ export default function EDmsBridgeConsole({ isOpen = true, onClose, inline = fal
             </div>
           </div>
 
-          <div className="p-4 max-h-72 overflow-y-auto font-mono text-[11px] text-slate-300 leading-relaxed custom-scrollbar selection:bg-blue-600">
-            <pre className="text-emerald-400/90 whitespace-pre-wrap">
+          <div className="p-4 max-h-72 overflow-y-auto font-mono text-[11px] text-slate-800 bg-white leading-relaxed custom-scrollbar selection:bg-blue-600">
+            <pre className="text-emerald-700 font-medium whitespace-pre-wrap">
               {activePacketTab === 'REQUEST' ? sampleSoapRequestXml : sampleSoapResponseXml}
             </pre>
           </div>

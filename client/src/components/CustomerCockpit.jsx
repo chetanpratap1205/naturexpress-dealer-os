@@ -27,9 +27,9 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import GSTInvoiceModal from './GSTInvoiceModal';
-import RazorpayEMIModal from './RazorpayEMIModal';
 import AccessoryCatalogModal from './AccessoryCatalogModal';
 import LoyaltyWalletModal from './LoyaltyWalletModal';
+import CarOwnerAgentModal from './CarOwnerAgentModal';
 
 export default function CustomerCockpit({ 
   jobCards, 
@@ -38,7 +38,7 @@ export default function CustomerCockpit({
   onApproveItem, 
   onDeclineItem, 
   onApproveEW, 
-  onSendMessage,
+  onSendMessage, 
   onAdvanceStage,
   onDataRefresh
 }) {
@@ -46,9 +46,9 @@ export default function CustomerCockpit({
   const [activeVideoModal, setActiveVideoModal] = useState(null);
   const [chatInput, setChatInput] = useState('');
   const [showInvoiceModal, setShowInvoiceModal] = useState(false);
-  const [showEMIModal, setShowEMIModal] = useState(false);
   const [showAccessoryModal, setShowAccessoryModal] = useState(false);
   const [showLoyaltyModal, setShowLoyaltyModal] = useState(false);
+  const [showCarOwnerAgentModal, setShowCarOwnerAgentModal] = useState(false);
   const [pulseFeedback, setPulseFeedback] = useState(null);
 
   if (!currentJc) return <div className="p-8 text-center text-slate-500">Loading Job Card...</div>;
@@ -117,7 +117,14 @@ export default function CustomerCockpit({
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={() => setShowCarOwnerAgentModal(true)}
+            className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white shadow-md transition-all cursor-pointer flex items-center space-x-1.5 shadow-blue-500/20"
+          >
+            <Car className="w-3.5 h-3.5 text-blue-100" />
+            <span>Connect with Personal Concierge</span>
+          </button>
           <button
             onClick={() => setShowAccessoryModal(true)}
             className="px-3 py-1.5 rounded-xl text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200 hover:bg-purple-100 transition-all cursor-pointer flex items-center space-x-1"
@@ -222,7 +229,7 @@ export default function CustomerCockpit({
               </span>
             </div>
             <p className="text-xs text-slate-500 mb-3">
-              How has your service experience at Sanghi Tata been today so far?
+              How has your service experience at Shyam Automotive been today so far?
             </p>
 
             <div className="grid grid-cols-3 gap-2">
@@ -291,16 +298,16 @@ export default function CustomerCockpit({
                     <div className="flex flex-col sm:flex-row gap-4">
                       <div 
                         onClick={() => setActiveVideoModal(item)}
-                        className="relative w-full sm:w-48 h-32 rounded-xl overflow-hidden bg-slate-900 shrink-0 cursor-pointer group border border-slate-200 shadow-xs"
+                        className="relative w-full sm:w-48 h-32 rounded-xl overflow-hidden bg-slate-100 shrink-0 cursor-pointer group border border-slate-200 shadow-xs"
                       >
                         <img 
                           src="https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=600&auto=format&fit=crop&q=80" 
                           alt={item.partName} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent"></div>
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                          <div className="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
                             <Play className="w-5 h-5 fill-white ml-0.5" />
                           </div>
                         </div>
@@ -352,7 +359,7 @@ export default function CustomerCockpit({
                   💬
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900 text-sm">Sanghi Tata Official WhatsApp Desk</h3>
+                  <h3 className="font-bold text-slate-900 text-sm">Shyam Automotive Official WhatsApp Desk</h3>
                   <p className="text-[10px] text-emerald-800 font-medium">Zero-Group Cloud API • VIN: MAT619333P3S</p>
                 </div>
               </div>
@@ -432,19 +439,12 @@ export default function CustomerCockpit({
         onClose={() => setShowLoyaltyModal(false)}
       />
 
-      <RazorpayEMIModal
+      {/* Car Owner Personal Concierge Modal */}
+      <CarOwnerAgentModal
+        isOpen={showCarOwnerAgentModal}
+        onClose={() => setShowCarOwnerAgentModal(false)}
         jobCard={currentJc}
-        selectedPackage={{
-          tier: "Gold Shield (2-Year Comprehensive)",
-          price: 18900,
-          coverage: "Complete Drivetrain, Electrical & DCA/EV Controls",
-          saCommission: 650
-        }}
-        isOpen={showEMIModal}
-        onClose={() => setShowEMIModal(false)}
-        onPaymentComplete={() => {
-          alert("✓ Extended Warranty Activated!");
-        }}
+        onDataRefresh={onDataRefresh}
       />
     </div>
   );

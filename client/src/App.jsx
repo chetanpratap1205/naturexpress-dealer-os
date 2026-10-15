@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import EnterpriseHeader from './components/EnterpriseHeader';
 import EnterpriseSidebar from './components/EnterpriseSidebar';
+import { Layers, Zap, UserCheck, LayoutGrid, Smartphone, Menu } from 'lucide-react';
+
+// Phase 2: Valet Identity & Customer Trust Layer
+import CustomerServiceTracker from './components/CustomerServiceTracker';
+import ValetIdentityCard from './components/ValetIdentityCard';
+import PickupSchedulerDesk from './components/PickupSchedulerDesk';
+
+// Phase 3: Public Dealership Showroom & Customer Portal
+import ShyamAutomotivePortal from './components/ShyamAutomotivePortal';
 
 // Executive Suite Views & Command Center
 import DealerCommandCenter from './components/DealerCommandCenter';
@@ -11,6 +20,16 @@ import ROIProfitCalculator from './components/ROIProfitCalculator';
 import CCMRadar from './components/CCMRadar';
 import CSIIntegrityShield from './components/CSIIntegrityShield';
 import OEMBatchDefectRadar from './components/OEMBatchDefectRadar';
+
+// Enterprise V2 Production Views
+import EnterpriseAuthScreen from './components/EnterpriseAuthScreen';
+import ServiceAdvisorIntakeDesk from './components/ServiceAdvisorIntakeDesk';
+import CustomerEstimateApprovalView from './components/CustomerEstimateApprovalView';
+import TechBayTerminal from './components/TechBayTerminal';
+import PartsStoreDesk from './components/PartsStoreDesk';
+import BillingGatePassDesk from './components/BillingGatePassDesk';
+import WarrantyFortressDesk from './components/WarrantyFortressDesk';
+import ExecutivePnLDesk from './components/ExecutivePnLDesk';
 
 // Service Advisor Desk Views
 import ServiceAdvisorPortal from './components/ServiceAdvisorPortal';
@@ -25,7 +44,7 @@ import WorkshopBayGrid from './components/WorkshopBayGrid';
 import TechDiagnosticTerminal from './components/TechDiagnosticTerminal';
 import RoadTestModal from './components/RoadTestModal';
 
-// Spares & AI Warranty Views
+// Spares & Warranty Fortress Views
 import InterDealerPartsSwarm from './components/InterDealerPartsSwarm';
 import PartsBinScannerModal from './components/PartsBinScannerModal';
 import AIWarrantyShield from './components/AIWarrantyShield';
@@ -41,32 +60,193 @@ import AutomatedCampaigns from './components/AutomatedCampaigns';
 
 // Customer Live Experience
 import CustomerCockpit from './components/CustomerCockpit';
+import CustomerSuperApp from './components/CustomerSuperApp';
+
+// Operations Specialists Command Hub & Desks
+import SpecialistsHubModal from './components/SpecialistsHubModal';
+import FloatingSpecialistDock from './components/FloatingSpecialistDock';
+import DealerPrincipalAgentModal from './components/DealerPrincipalAgentModal';
+import WorksManagerAgentModal from './components/WorksManagerAgentModal';
+import TechAgentModal from './components/TechAgentModal';
+import PartsStoreAgentModal from './components/PartsStoreAgentModal';
+import WarrantyAgentModal from './components/WarrantyAgentModal';
+import CCMAgentModal from './components/CCMAgentModal';
+import CREAgentModal from './components/CREAgentModal';
+import BillingCashierAgentModal from './components/BillingCashierAgentModal';
+import ServiceAdvisorAgentModal from './components/ServiceAdvisorAgentModal';
+import CarOwnerAgentModal from './components/CarOwnerAgentModal';
 
 // Fallback Initial State for zero-latency instant rendering
 const DEFAULT_DEALERSHIP = {
-  id: "sanghi-indore-01",
-  name: "Sanghi Brothers (Tata Motors)",
-  cluster: "Indore Central - Bypass & Manorama Ganj",
-  phone: "+91 731 4055000",
-  verifiedWhatsApp: "+91 98930 11223",
+  id: "shyam-scheme-140",
+  name: "Shyam Automotive (Tata Motors)",
+  cluster: "Indore East - Scheme 140 & Bicholi Mardana (Opp Agarwal Public School)",
+  address: "Infront of Agarwal Public School, Khasra No.15/3/4, Scheme No 140 Main Rd, Bicholi Mardana Rd, Indore, MP 452016",
+  phone: "+91 88798 97825",
+  verifiedWhatsApp: "+91 88798 97825",
   activeBays: 18,
-  totalTechnicians: 24,
-  liveThroughputToday: 42
+  totalTechnicians: 22,
+  liveThroughputToday: 42,
+  googleRating: 4.9,
+  googleReviews: 1237,
+  website: "https://automotive.naturexpress.in",
+  mdName: "Shyam Singhal",
+  mdPhone: "+91 88798 97825"
 };
 
 const DEFAULT_USER = {
   id: "usr-01",
-  name: "Chetan Sanghi",
-  email: "chetan@sanghitata.in",
+  name: "Shyam Singhal",
+  email: "md@shyamautomotive.com",
   role: "DEALER_PRINCIPAL",
   title: "Managing Director / Dealer Principal",
   avatar: "👑"
 };
 
 export default function App() {
-  const [activeRole, setActiveRole] = useState('EXECUTIVE');
-  const [activeTab, setActiveTab] = useState('exec_command');
-  const [currentUser, setCurrentUser] = useState(DEFAULT_USER);
+  // 1. Zero-Install Customer Deep Link Interceptors
+  // Handles: /#/view/estimate/:token, /#/track/:token, /#/pickup/:token
+  const [customerToken, setCustomerToken] = useState(() => {
+    const hash = window.location.hash || '';
+    if (hash.startsWith('#/view/estimate/')) {
+      return hash.replace('#/view/estimate/', '').split('?')[0];
+    }
+    const params = new URLSearchParams(window.location.search);
+    return params.get('token') || null;
+  });
+
+  const [serviceTrackToken, setServiceTrackToken] = useState(() => {
+    const hash = window.location.hash || '';
+    if (hash.startsWith('#/track/')) return hash.replace('#/track/', '').split('?')[0];
+    return null;
+  });
+
+  const [pickupTrackToken, setPickupTrackToken] = useState(() => {
+    const hash = window.location.hash || '';
+    if (hash.startsWith('#/pickup/')) return hash.replace('#/pickup/', '').split('?')[0];
+    return null;
+  });
+
+  // Phase 3: Public Showroom vs Internal Dealer OS Portal Toggle
+  const [showStaffPortal, setShowStaffPortal] = useState(() => {
+    const hash = window.location.hash || '';
+    return hash.startsWith('#/portal') || hash.startsWith('#/staff');
+  });
+
+  // Customer Mobile Super-App & Garage Hub Toggle
+  const [showCustomerSuperApp, setShowCustomerSuperApp] = useState(() => {
+    const hash = window.location.hash || '';
+    return hash.startsWith('#/app') || hash.startsWith('#/garage') || hash.startsWith('#/customer');
+  });
+
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash || '';
+      if (hash.startsWith('#/view/estimate/')) {
+        setCustomerToken(hash.replace('#/view/estimate/', '').split('?')[0]);
+        setServiceTrackToken(null); setPickupTrackToken(null);
+      } else if (hash.startsWith('#/track/')) {
+        setServiceTrackToken(hash.replace('#/track/', '').split('?')[0]);
+        setCustomerToken(null); setPickupTrackToken(null);
+      } else if (hash.startsWith('#/pickup/')) {
+        setPickupTrackToken(hash.replace('#/pickup/', '').split('?')[0]);
+        setCustomerToken(null); setServiceTrackToken(null);
+      } else if (hash.startsWith('#/app') || hash.startsWith('#/garage') || hash.startsWith('#/customer')) {
+        setShowCustomerSuperApp(true);
+        setShowStaffPortal(false);
+        setCustomerToken(null); setServiceTrackToken(null); setPickupTrackToken(null);
+      } else if (hash.startsWith('#/portal') || hash.startsWith('#/staff')) {
+        setShowStaffPortal(true);
+        setShowCustomerSuperApp(false);
+        setCustomerToken(null); setServiceTrackToken(null); setPickupTrackToken(null);
+      } else if (hash === '' || hash === '#/' || hash.startsWith('#/home') || hash.startsWith('#/showroom')) {
+        setShowStaffPortal(false);
+        setShowCustomerSuperApp(false);
+        setCustomerToken(null); setServiceTrackToken(null); setPickupTrackToken(null);
+      } else {
+        const params = new URLSearchParams(window.location.search);
+        setCustomerToken(params.get('token') || null);
+        setServiceTrackToken(null); setPickupTrackToken(null);
+      }
+    };
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
+  // 2. Strict Role-Based Authentication
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return !!localStorage.getItem('nx_token');
+  });
+
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nx_user');
+      return saved ? JSON.parse(saved) : DEFAULT_USER;
+    } catch (e) {
+      return DEFAULT_USER;
+    }
+  });
+
+  const [activeRole, setActiveRole] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nx_user');
+      if (saved) {
+        const u = JSON.parse(saved);
+        if (u.role === 'SERVICE_ADVISOR') return 'WORKSHOP';
+        if (u.role === 'FLOOR_TECHNICIAN') return 'WORKSHOP';
+        if (u.role === 'PARTS_MANAGER') return 'SPARES';
+        if (u.role === 'BILLING_CASHIER') return 'GROWTH';
+      }
+    } catch (e) {}
+    return 'EXECUTIVE';
+  });
+
+  const [activeTab, setActiveTab] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nx_user');
+      if (saved) {
+        const u = JSON.parse(saved);
+        if (u.role === 'SERVICE_ADVISOR') return 'sa_intake';
+        if (u.role === 'FLOOR_TECHNICIAN') return 'workshop_grid';
+        if (u.role === 'PARTS_MANAGER') return 'spares_swarm';
+        if (u.role === 'BILLING_CASHIER') return 'sa_invoice';
+      }
+    } catch (e) {}
+    return 'exec_command';
+  });
+
+  const handleLoginSuccess = (user, token, branch) => {
+    localStorage.setItem('nx_user', JSON.stringify(user));
+    localStorage.setItem('nx_token', token);
+    setCurrentUser(user);
+    setIsAuthenticated(true);
+    if (branch) setDealership(branch);
+
+    if (user.role === 'SERVICE_ADVISOR') {
+      setActiveRole('WORKSHOP');
+      setActiveTab('sa_intake');
+    } else if (user.role === 'FLOOR_TECHNICIAN') {
+      setActiveRole('WORKSHOP');
+      setActiveTab('workshop_grid');
+    } else if (user.role === 'PARTS_MANAGER') {
+      setActiveRole('SPARES');
+      setActiveTab('spares_swarm');
+    } else if (user.role === 'BILLING_CASHIER') {
+      setActiveRole('GROWTH');
+      setActiveTab('sa_invoice');
+    } else {
+      setActiveRole('EXECUTIVE');
+      setActiveTab('exec_command');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('nx_user');
+    localStorage.removeItem('nx_token');
+    setIsAuthenticated(false);
+  };
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dealership, setDealership] = useState(DEFAULT_DEALERSHIP);
   const [jobCards, setJobCards] = useState([]);
   const [selectedJcId, setSelectedJcId] = useState('jc-8899');
@@ -83,6 +263,8 @@ export default function App() {
   const [revenueOpportunities, setRevenueOpportunities] = useState([]);
   const [revenueRadar, setRevenueRadar] = useState(null);
   const [wsConnected, setWsConnected] = useState(false);
+  const [showSpecialistsHub, setShowSpecialistsHub] = useState(false);
+  const [activeSpecialistModal, setActiveSpecialistModal] = useState(null);
 
   // Resilient master data fetcher
   const fetchData = async () => {
@@ -384,8 +566,121 @@ export default function App() {
     }
   };
 
+  const handleSelectUser = (user) => {
+    setCurrentUser(user);
+    if (!user) return;
+    switch (user.role) {
+      case 'DEALER_PRINCIPAL':
+        setActiveRole('EXECUTIVE');
+        setActiveTab('exec_command');
+        break;
+      case 'SERVICE_ADVISOR':
+        setActiveRole('WORKSHOP');
+        setActiveTab('sa_intake');
+        break;
+      case 'MASTER_TECHNICIAN':
+        setActiveRole('WORKSHOP');
+        setActiveTab('workshop_diag');
+        break;
+      case 'WORKS_MANAGER':
+        setActiveRole('WORKSHOP');
+        setActiveTab('workshop_grid');
+        break;
+      case 'PARTS_MANAGER':
+        setActiveRole('SPARES');
+        setActiveTab('spares_swarm');
+        break;
+      case 'WARRANTY_OFFICER':
+        setActiveRole('SPARES');
+        setActiveTab('spares_warranty');
+        break;
+      case 'OEM_CCM':
+        setActiveRole('SPARES');
+        setActiveTab('exec_ccm');
+        break;
+      case 'CRE_SPECIALIST':
+        setActiveRole('GROWTH');
+        setActiveTab('growth_telephony');
+        break;
+      case 'BILLING_CASHIER':
+        setActiveRole('WORKSHOP');
+        setActiveTab('sa_invoice');
+        break;
+      case 'CAR_OWNER':
+        setActiveRole('CUSTOMER');
+        setActiveTab('customer_cockpit');
+        break;
+      default:
+        setActiveRole('EXECUTIVE');
+        setActiveTab('exec_command');
+    }
+  };
+
+  // 1. Zero-Install Customer Estimate Deep Link View (No staff UI, no login)
+  if (customerToken) {
+    return <CustomerEstimateApprovalView token={customerToken} />;
+  }
+
+  // Phase 2A: Customer Service Tracker (No login — public link shared by SA)
+  if (serviceTrackToken) {
+    return <CustomerServiceTracker token={serviceTrackToken} />;
+  }
+
+  // Phase 2B: Valet Identity Card (No login — customer verifies valet before handing keys)
+  if (pickupTrackToken) {
+    return <ValetIdentityCard token={pickupTrackToken} />;
+  }
+
+  // Customer Mobile Super-App & Garage Hub (Google OAuth 2.0)
+  if (showCustomerSuperApp) {
+    return (
+      <CustomerSuperApp
+        onBackToShowroom={() => {
+          window.location.hash = '';
+          setShowCustomerSuperApp(false);
+        }}
+        onOpenStaffPortal={() => {
+          window.location.hash = '#/portal';
+          setShowCustomerSuperApp(false);
+          setShowStaffPortal(true);
+        }}
+      />
+    );
+  }
+
+  // Phase 3: Public Dealership Showroom & Customer Portal
+  // If not explicitly navigating to the staff portal, show the public showroom portal
+  if (!showStaffPortal) {
+    return (
+      <ShyamAutomotivePortal
+        onOpenStaffPortal={() => {
+          window.location.hash = '#/portal';
+          setShowStaffPortal(true);
+        }}
+        onOpenCustomerApp={() => {
+          window.location.hash = '#/app';
+          setShowCustomerSuperApp(true);
+        }}
+        currentUser={isAuthenticated ? currentUser : null}
+      />
+    );
+  }
+
+  // 2. Strict Staff Floor Terminal PIN Login Gate (when accessing staff portal)
+  if (!isAuthenticated) {
+    return (
+      <EnterpriseAuthScreen
+        onLoginSuccess={handleLoginSuccess}
+        onBackToShowroom={() => {
+          window.location.hash = '';
+          setShowStaffPortal(false);
+        }}
+      />
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
       {/* Enterprise Master Header */}
       <EnterpriseHeader
         activeRole={activeRole}
@@ -393,14 +688,22 @@ export default function App() {
         dealership={dealership}
         currentUser={currentUser}
         wsConnected={wsConnected}
-        onSelectUser={setCurrentUser}
+        onSelectUser={handleSelectUser}
         onResetDemoData={handleResetDemoData}
         onDataRefresh={fetchData}
+        onLogout={handleLogout}
+        onOpenShowroom={() => {
+          window.location.hash = '';
+          setShowStaffPortal(false);
+        }}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         jobCards={jobCards}
         ccmAlerts={ccmAlerts}
         partsPool={partsPool}
+        onToggleMobileMenu={() => setMobileMenuOpen(prev => !prev)}
+        mobileMenuOpen={mobileMenuOpen}
+        onOpenSpecialistsHub={() => setShowSpecialistsHub(true)}
       />
 
       {/* Enterprise Layout: Sidebar + Main Workspace */}
@@ -411,21 +714,31 @@ export default function App() {
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           dealership={dealership}
+          currentUser={currentUser}
           jobCards={jobCards}
           ccmAlerts={ccmAlerts}
           partsPool={partsPool}
           warrantyClaims={warrantyClaims}
           revenueOpportunities={revenueOpportunities}
           revenueRadar={revenueRadar}
+          mobileOpen={mobileMenuOpen}
+          onCloseMobile={() => setMobileMenuOpen(false)}
         />
 
         {/* Dynamic Workspace Container */}
-        <main className="flex-1 bg-slate-100/90 text-slate-900 overflow-y-auto p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 bg-slate-100/90 text-slate-900 overflow-y-auto p-3 sm:p-6 lg:p-8 pb-24 lg:pb-8">
           <div className="max-w-7xl mx-auto space-y-6">
 
             {/* ========================================================= */}
             {/* 1. EXECUTIVE COMMAND SUITE & REVENUE RADAR */}
             {/* ========================================================= */}
+            {activeTab === 'executive_pnl' && (
+              <ExecutivePnLDesk
+                currentUser={currentUser}
+                onDataRefresh={fetchData}
+              />
+            )}
+
             {activeTab === 'exec_command' && (
               <DealerCommandCenter
                 dealership={dealership}
@@ -443,6 +756,7 @@ export default function App() {
 
             {activeTab === 'growth_action_center' && (
               <ActionCenter
+                dealership={dealership}
                 revenueOpportunities={revenueOpportunities}
                 revenueRadar={revenueRadar}
                 onExecuteOpportunity={handleExecuteOpportunity}
@@ -482,10 +796,17 @@ export default function App() {
             {/* 2. SERVICE ADVISOR DESK */}
             {/* ========================================================= */}
             {activeTab === 'sa_intake' && (
-              <ServiceAdvisorPortal
-                jobCards={jobCards}
-                dealership={dealership}
+              <ServiceAdvisorIntakeDesk
+                currentUser={currentUser}
                 onJobCardCreated={fetchData}
+              />
+            )}
+
+            {/* Phase 2: Valet Pickup Scheduler */}
+            {activeTab === 'pickup_scheduler' && (
+              <PickupSchedulerDesk
+                currentUser={currentUser}
+                onDataRefresh={fetchData}
               />
             )}
 
@@ -498,7 +819,7 @@ export default function App() {
             )}
 
             {activeTab === 'sa_invoice' && (
-              <GSTInvoiceModal inline={true} jobCards={jobCards} />
+              <GSTInvoiceModal inline={true} jobCards={jobCards} onDataRefresh={fetchData} />
             )}
 
             {activeTab === 'sa_leaderboard' && (
@@ -508,6 +829,20 @@ export default function App() {
             {/* ========================================================= */}
             {/* 3. WORKSHOP FLOOR & BAYS */}
             {/* ========================================================= */}
+            {activeTab === 'workshop_terminal' && (
+              <TechBayTerminal
+                currentUser={currentUser}
+                onDataRefresh={fetchData}
+              />
+            )}
+
+            {activeTab === 'billing_gatepass' && (
+              <BillingGatePassDesk
+                currentUser={currentUser}
+                onDataRefresh={fetchData}
+              />
+            )}
+
             {activeTab === 'workshop_grid' && (
               <CSPBayGanttScheduler
                 dealership={dealership}
@@ -518,7 +853,7 @@ export default function App() {
             )}
 
             {activeTab === 'workshop_diag' && (
-              <TechDiagnosticTerminal />
+              <TechDiagnosticTerminal onDataRefresh={fetchData} />
             )}
 
             {activeTab === 'workshop_roadtest' && (
@@ -526,8 +861,22 @@ export default function App() {
             )}
 
             {/* ========================================================= */}
-            {/* 4. SPARES & AI WARRANTY FORTRESS */}
+            {/* 4. SPARES & WARRANTY FORTRESS */}
             {/* ========================================================= */}
+            {activeTab === 'parts_store' && (
+              <PartsStoreDesk
+                currentUser={currentUser}
+                onDataRefresh={fetchData}
+              />
+            )}
+
+            {activeTab === 'warranty_fortress' && (
+              <WarrantyFortressDesk
+                currentUser={currentUser}
+                onDataRefresh={fetchData}
+              />
+            )}
+
             {activeTab === 'spares_swarm' && (
               <InterDealerPartsSwarm
                 partsPool={partsPool}
@@ -535,6 +884,7 @@ export default function App() {
                 territoryStats={territoryStats}
                 onDispatchRunner={handleDispatchRunner}
                 onLiquidateDeadStock={handleLiquidateDeadStock}
+                onDataRefresh={fetchData}
               />
             )}
 
@@ -547,6 +897,7 @@ export default function App() {
                 warrantyClaims={warrantyClaims}
                 onUploadPhoto={handleUploadWarrantyPhoto}
                 onSubmitClaim={handleSubmitWarrantyClaim}
+                onDataRefresh={fetchData}
               />
             )}
 
@@ -569,6 +920,7 @@ export default function App() {
               <CRETelephonyCRM
                 creQueue={creLeads}
                 onNudge={fetchData}
+                onDataRefresh={fetchData}
               />
             )}
 
@@ -607,19 +959,159 @@ export default function App() {
         </main>
       </div>
 
-      {/* Enterprise Bottom Status Bar */}
-      <footer className="border-t border-slate-800 bg-slate-950 px-6 py-2.5 text-xs text-slate-400 flex items-center justify-between">
+      {/* Mobile Sticky Bottom Action Bar (visible only on mobile/tablet) */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-1.5 flex items-center justify-around text-slate-500 shadow-lg">
+        <button
+          onClick={() => setActiveTab('exec_command')}
+          className={`flex flex-col items-center justify-center p-1.5 rounded-xl transition-all ${
+            activeTab === 'exec_command' ? 'text-blue-600 font-bold' : 'text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <Layers className="w-5 h-5" />
+          <span className="text-[10px] mt-0.5">Command</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('growth_action_center')}
+          className={`flex flex-col items-center justify-center p-1.5 rounded-xl transition-all relative ${
+            activeTab === 'growth_action_center' ? 'text-rose-600 font-bold' : 'text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <Zap className="w-5 h-5" />
+          <span className="text-[10px] mt-0.5">Actions</span>
+          {revenueOpportunities.filter(o => o.status !== 'RECOVERED').length > 0 && (
+            <span className="absolute top-1 right-2 w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+          )}
+        </button>
+
+        <button
+          onClick={() => setActiveTab('sa_intake')}
+          className={`flex flex-col items-center justify-center p-1.5 rounded-xl transition-all ${
+            activeTab === 'sa_intake' ? 'text-amber-600 font-bold' : 'text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <UserCheck className="w-5 h-5" />
+          <span className="text-[10px] mt-0.5">Intake</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('workshop_grid')}
+          className={`flex flex-col items-center justify-center p-1.5 rounded-xl transition-all ${
+            activeTab === 'workshop_grid' ? 'text-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <LayoutGrid className="w-5 h-5" />
+          <span className="text-[10px] mt-0.5">18-Bays</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('customer_cockpit')}
+          className={`flex flex-col items-center justify-center p-1.5 rounded-xl transition-all ${
+            activeTab === 'customer_cockpit' ? 'text-emerald-600 font-bold' : 'text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <Smartphone className="w-5 h-5" />
+          <span className="text-[10px] mt-0.5">Customer</span>
+        </button>
+
+        <button
+          onClick={() => setMobileMenuOpen(true)}
+          className="flex flex-col items-center justify-center p-1.5 rounded-xl text-slate-500 hover:text-slate-800 transition-all cursor-pointer"
+        >
+          <Menu className="w-5 h-5 text-slate-600" />
+          <span className="text-[10px] mt-0.5">All Menu</span>
+        </button>
+      </nav>
+
+      {/* Enterprise Bottom Status Bar (Desktop) */}
+      <footer className="hidden lg:flex border-t border-slate-200 bg-white px-6 py-2.5 text-xs text-slate-500 items-center justify-between shadow-xs">
         <div className="flex items-center space-x-3">
-          <span className="font-semibold text-slate-300">NatureXpress Dealership OS</span>
+          <span className="font-bold text-slate-800">Shyam Automotive • Tata Motors Dealership OS</span>
           <span>•</span>
-          <span>Sanghi Brothers Indore Cluster Edition</span>
+          <span>Scheme 140 Flagship Hub (Indore)</span>
           <span>•</span>
-          <span className="text-emerald-400 font-medium">18 Bays Active</span>
+          <span className="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">18 Bays Active</span>
         </div>
-        <div className="text-[11px] text-slate-500 font-mono">
-          Session ID: SANGHI-IND-20261005 • Realtime WebSockets: {wsConnected ? 'Connected' : 'Offline'}
+        <div className="text-[11px] text-slate-400 font-mono">
+          Session ID: SHYAM-SCHEME140 • Realtime WebSockets: {wsConnected ? 'Connected' : 'Offline'}
         </div>
       </footer>
+      {/* Floating Operations Specialist Quick-Action Dock */}
+      <FloatingSpecialistDock
+        activeTab={activeTab}
+        onOpenSpecialist={(id) => setActiveSpecialistModal(id)}
+        onOpenHub={() => setShowSpecialistsHub(true)}
+      />
+
+      {/* Operations Specialists Hub Master Command Modal */}
+      <SpecialistsHubModal
+        isOpen={showSpecialistsHub}
+        onClose={() => setShowSpecialistsHub(false)}
+        onOpenSpecialist={(id) => setActiveSpecialistModal(id)}
+        onNavigateTab={(tab) => {
+          setActiveTab(tab);
+          if (['exec_command', 'executive_pnl', 'exec_briefing', 'exec_roi', 'exec_audit'].includes(tab)) setActiveRole('EXECUTIVE');
+          else if (['growth_action_center', 'growth_ew', 'growth_telephony', 'growth_drips', 'growth_valueclub', 'growth_loyalty'].includes(tab)) setActiveRole('GROWTH');
+          else if (['workshop_grid', 'workshop_diag', 'sa_intake', 'sa_invoice', 'pickup_scheduler'].includes(tab)) setActiveRole('WORKSHOP');
+          else if (['spares_swarm', 'spares_scanner', 'spares_warranty', 'spares_edms', 'exec_ccm', 'exec_csi'].includes(tab)) setActiveRole('SPARES');
+          else if (['customer_cockpit'].includes(tab)) setActiveRole('CUSTOMER');
+        }}
+      />
+
+      {/* Global Specialist Desks Modals (Accessible from Hub and Floating Dock) */}
+      <DealerPrincipalAgentModal
+        isOpen={activeSpecialistModal === 'dealerPrincipal'}
+        onClose={() => setActiveSpecialistModal(null)}
+        onDataRefresh={fetchData}
+      />
+      <WorksManagerAgentModal
+        isOpen={activeSpecialistModal === 'worksManager'}
+        onClose={() => setActiveSpecialistModal(null)}
+        onDataRefresh={fetchData}
+      />
+      <TechAgentModal
+        isOpen={activeSpecialistModal === 'floorTech'}
+        onClose={() => setActiveSpecialistModal(null)}
+        technicianName={currentUser?.name || "Ramesh Sonawane"}
+        onDataRefresh={fetchData}
+      />
+      <PartsStoreAgentModal
+        isOpen={activeSpecialistModal === 'partsStore'}
+        onClose={() => setActiveSpecialistModal(null)}
+        onDataRefresh={fetchData}
+      />
+      <WarrantyAgentModal
+        isOpen={activeSpecialistModal === 'warranty'}
+        onClose={() => setActiveSpecialistModal(null)}
+        onDataRefresh={fetchData}
+      />
+      <CCMAgentModal
+        isOpen={activeSpecialistModal === 'ccm'}
+        onClose={() => setActiveSpecialistModal(null)}
+        onDataRefresh={fetchData}
+      />
+      <CREAgentModal
+        isOpen={activeSpecialistModal === 'cre'}
+        onClose={() => setActiveSpecialistModal(null)}
+        onDataRefresh={fetchData}
+      />
+      <BillingCashierAgentModal
+        isOpen={activeSpecialistModal === 'billing'}
+        onClose={() => setActiveSpecialistModal(null)}
+        onDataRefresh={fetchData}
+      />
+      <ServiceAdvisorAgentModal
+        isOpen={activeSpecialistModal === 'serviceAdvisor'}
+        onClose={() => setActiveSpecialistModal(null)}
+        advisorName={currentUser?.name || "Rahul Sharma"}
+        onDataRefresh={fetchData}
+      />
+      <CarOwnerAgentModal
+        isOpen={activeSpecialistModal === 'carOwner'}
+        onClose={() => setActiveSpecialistModal(null)}
+        jobCard={jobCards?.find(j => j.id === selectedJcId) || jobCards?.[0]}
+        onDataRefresh={fetchData}
+      />
     </div>
   );
 }
